@@ -128,10 +128,14 @@ public class MasterMind extends Application {
         pane.setCenter(grid);
         pane.setRight(dotsbox);
         pane.setTop(menuBar);
+        /*ProgressIndicator p1 = new ProgressIndicator();
+        p1.setMaxHeight(50);
+        pane.setCenter(p1);*/
 
         BorderPane.setAlignment(botBox, Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(grid, Pos.CENTER);
         BorderPane.setAlignment(dotsbox, Pos.CENTER);
+        //BorderPane.setAlignment(p1, Pos.CENTER);
 
         scene = new Scene(pane, 720, 800);
         primaryStage.setMaxHeight(800);
@@ -205,9 +209,8 @@ public class MasterMind extends Application {
 
         @Override
         public void handle(ActionEvent event) {
-            ProgressIndicator p1 = new ProgressIndicator();
-            pane.setTop(p1);
-            BorderPane.setAlignment(p1, Pos.TOP_CENTER);
+
+           
 
             if (event.getSource() == open) {
                 try {
