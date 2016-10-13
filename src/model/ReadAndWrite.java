@@ -22,10 +22,10 @@ public class ReadAndWrite {
     private File MyFile;
 
     public ReadAndWrite() {
-        MyFile = new File("test.txt");
+        //MyFile = new File("test.txt");
     }
 
-    public boolean writeToFile(ArrayList<Player> players) throws IOException {
+    public boolean writeToFile(ArrayList<Player> players) throws IOException,AlertToUser {
         System.out.println("write");
         boolean sucses = false;
         ObjectOutputStream output = null;
@@ -43,6 +43,7 @@ public class ReadAndWrite {
                     output.close();
                 }
             } catch (IOException e) {
+                throw new AlertToUser("Can not save data!");
 
             }
         }
@@ -58,7 +59,7 @@ public class ReadAndWrite {
      * @return true if saved, else false
      * @throws ClassNotFoundException
      */
-    public ArrayList<Player> readFromFile(File file) throws ClassNotFoundException, IOException {
+    public ArrayList<Player> readFromFile(File file) throws ClassNotFoundException, IOException,AlertToUser {
         ArrayList<Player> playres = new ArrayList<Player>();
         ObjectInputStream input = null;
         MyFile = file;
@@ -69,7 +70,7 @@ public class ReadAndWrite {
             System.out.println("Deserializing successfully");
             
         } catch (ClassNotFoundException e) {
-            System.out.println("inläsning miss lyckades!");
+           throw new AlertToUser("Can not open file!");
         }
         finally{
             try {
@@ -77,6 +78,7 @@ public class ReadAndWrite {
                     input.close();
                 }
             } catch (Exception e) {
+                
             }
         }
 

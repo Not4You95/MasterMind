@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package model;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,60 +21,64 @@ public class MasterController {
 
     private int colorNuber = 0;
     private ArrayList<String> color;
-    private  MasterMindModel MasterModel;
+    private MasterMindModel MasterModel;
     private MasterMind scen;
-    
+
     public MasterController() {
         color = new ArrayList<String>();
         MasterModel = new MasterMindModel();
-        
-        
+
     }
-    
+
     public void equalColor(Color c) {
-        
+
     }
-    
+
     public void equalColor(String color) {
         this.color.add(color);
         System.out.println("hej");
         if (this.color.size() == 4) {
-             MasterModel.addColors(this.color);
+            MasterModel.addColors(this.color);
             System.out.println("hej!!!!!!!!!!!!!!!");
             MasterModel.guessOfColors();
-            this.color.clear();            
+            this.color.clear();
         }
-        
+
     }
-    
-    public void makeDot(){
-        
+
+    public void makeDot() {
+
     }
-    
-    public void newGame(){
-       MasterModel.colorGenerated();
+
+    public void newGame() {
+        MasterModel.colorGenerated();
     }
-    
-    public ArrayList<String> openFile(File file) throws ClassNotFoundException, IOException{
+
+    public ArrayList<String> openFile(File file) throws ClassNotFoundException, IOException {
         ArrayList<String> temp = new ArrayList<String>();
-        temp.addAll(MasterModel.ReadFromFile(file));        
-        
+        try {
+
+            temp.addAll(MasterModel.ReadFromFile(file));
+        } catch (AlertToUser e) {
+            scen.alert(e.getMessage());
+        }
+
         return temp;
     }
-    
-   
-    public  void saveToFile() throws IOException{
-       
+
+    public void saveToFile() throws IOException {
+
         MasterModel.saveToFile();
-       
+
     }
+
     public static void main(String[] args) {
         launch(args);
     }
-    
-    public void newPlayer(String name){
+
+    public void newPlayer(String name) {
         MasterModel.newPlayer(name);
-        
+
     }
-    
+
 }

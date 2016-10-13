@@ -107,17 +107,17 @@ public class MasterMindModel {
         System.out.println(Players.get(PlayerNumer).getUserName());
     }
 
-    public void saveToFile() throws IOException {
+    public void saveToFile() throws IOException, AlertToUser {
 
-        if (Players.size() != 0) {
+      //  if (Players.size() == 0) throw new AlertToUser("You need to creat a player!");
             Players.get(PlayerNumer).lastGame(secretColors, Colors);
             boolean temp2 = file.writeToFile(Players);
             System.out.println(temp2);
 
-        }
+        
     }
 
-    public ArrayList<String> ReadFromFile(File open) throws ClassNotFoundException, IOException {
+    public ArrayList<String> ReadFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
         filename = open;
         Players.addAll(file.readFromFile(open));
         ArrayList<String> temp = new ArrayList<String>();
@@ -126,11 +126,11 @@ public class MasterMindModel {
 
         for (int i = 0; i < Colors.size(); i++) {
             for (int j = 0; j < 4; j++) {
-                temp.add(Colors.get(i).getRowCircel(j));               
+                temp.add(Colors.get(i).getRowCircel(j));
 
             }
         }
-        System.out.println("name: "+Players.get(PlayerNumer).getUserName());       
+        System.out.println("name: " + Players.get(PlayerNumer).getUserName());
         return temp;
     }
 

@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
@@ -115,7 +116,7 @@ public class MasterMind extends Application {
         AboutGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
 
         rules.addEventHandler(ActionEvent.ACTION, new menuChoise());
-        about.getItems().add(rules);
+        about.getItems().addAll(rules,AboutGame);
 
         menuBar.getMenus().addAll(meny, about);
         ////////////////////////////////////////
@@ -142,6 +143,14 @@ public class MasterMind extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
+    }
+
+    public void alert(String info) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+       alert.setHeaderText("Error");
+        alert.setTitle("Error!");
+        alert.setContentText(info);
+        alert.show();
     }
 
     public void ColorButtenChoise(Color c, int a) {
@@ -229,6 +238,7 @@ public class MasterMind extends Application {
                 nameStage.close();
 
             } else if (event.getSource() == AboutGame) {
+                alert("test");
 
             }
 
