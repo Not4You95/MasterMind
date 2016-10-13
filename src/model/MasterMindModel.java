@@ -25,7 +25,7 @@ public class MasterMindModel {
      * @param args the command line arguments
      */
     private ArrayList<RowCirckle> Colors;
-    private RowCirckle cirkelRow;
+    private ArrayList<RowCirckle> dots;
     private int row = 0;
     private boolean temp = false;
     private Color genrateColors;
@@ -39,17 +39,18 @@ public class MasterMindModel {
         Colors = new ArrayList<RowCirckle>();
         Players = new Player();
         file = new ReadAndWrite();
+        dots = new ArrayList<RowCirckle>();
     }
 
     public void addColors(ArrayList temp) {
-        cirkelRow = new RowCirckle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
+       RowCirckle cirkelRow = new RowCirckle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
         Colors.add(cirkelRow);
         System.out.println("User: " + Colors.get(row).toString());
         row++;
     }
 
     public String[] guessOfColors() {
-        String[] test = new String[4];
+        String[] dotsString = new String[4];
         int svart = 0;
         System.out.println(secretColors.toString());
         for (int i = row - 1; i < row; i++) {
@@ -58,25 +59,24 @@ public class MasterMindModel {
 
                 if (Colors.get(i).getRowCircel(j).equals(secretColors.getRowCircel(j))) {
 
-                    test[j] = "svart";
+                    dotsString[j] = "svart";
                     svart++;
 
                 } else if (secretColors.toString().contains(Colors.get(i).getRowCircel(j))) {
 
-                    test[j] = "vit";
+                    dotsString[j] = "vit";
 
                 } else {
-                    test[j] = "inget";
+                    dotsString[j] = "inget";
                 }
-
+                
             }
-
+            RowCirckle newdots = new RowCirckle(dotsString[0], dotsString[1], dotsString[2], dotsString[3]);
+            dots.add(newdots);
         }
         System.out.println("--------------------------------------");
 
-        for (String test1 : test) {
-            System.out.println(test1);
-        }
+        System.out.println(dots.get(row-1).toString());
         if (svart == 7) {
             String[] vinst = new String[1];
             vinst[0] = "vinst";
@@ -93,7 +93,7 @@ public class MasterMindModel {
             return lost;
         }
 
-        return test;
+        return dotsString;
     }
 
     public void colorGenerated() {
@@ -123,7 +123,7 @@ public class MasterMindModel {
     public void saveToFile() throws IOException, AlertToUser {
         
         if (Players.getUserName() == null) throw new AlertToUser("You need to creat a player!");
-            Players.lastGame(secretColors, Colors);
+            Players.lastGame(secretColors, Colors,dots);
             boolean temp2 = file.writeToFile(Players,filename);
             System.out.println(temp2);
 

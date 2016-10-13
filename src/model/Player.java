@@ -20,9 +20,11 @@ public class Player implements Serializable {
     private int numberOfGames = 0;
     private RowCirckle secretColor;
     private ArrayList<RowCirckle> userColors;
+    private ArrayList<RowCirckle> dots;
 
     public Player() {
         userColors = new ArrayList<RowCirckle>();
+        dots  =new ArrayList<RowCirckle>();
     }
 
     public Player(String name) {
@@ -74,9 +76,10 @@ public class Player implements Serializable {
         numberOfGames++;
     }
 
-    public void lastGame(RowCirckle secret, ArrayList<RowCirckle> colors) {
+    public void lastGame(RowCirckle secret, ArrayList<RowCirckle> colors, ArrayList<RowCirckle> dots) {
         secretColor = secret;
-        userColors.addAll(colors);
+        this.userColors.addAll(colors);
+        this.dots.addAll(dots);
 
     }
 
@@ -89,5 +92,13 @@ public class Player implements Serializable {
         temp.addAll(userColors);
         return temp;
     }
-
+    
+    public void setDots(ArrayList<RowCirckle> newDots){
+        this.dots.addAll(newDots);
+    }
+    public ArrayList<RowCirckle> getDots(){
+        ArrayList<RowCirckle> temp = new ArrayList<RowCirckle>();
+        temp.addAll(dots);
+        return temp;
+    }
 }
