@@ -180,7 +180,7 @@ public class MasterMind extends Application {
     }
 
     public void score() {
-        Label winsNr,gamesNr,wins,games;
+        Label winsNr, gamesNr, wins, games;
         GridPane scorePane = new GridPane();
         wins = new Label("Wins");
         wins.setTextFill(Color.WHITE);
@@ -259,7 +259,7 @@ public class MasterMind extends Application {
                         makeDots();
                         uppDateCirckel(temp);
                         score();
-                        gameOver=false;
+                        gameOver = false;
                     }
 
                 } catch (ClassNotFoundException ex) {
@@ -283,8 +283,9 @@ public class MasterMind extends Application {
             } else if (event.getSource() == newGame) {
                 if (controller.hasGamePlayers()) {
                     userInputName();
-                    gameOver=false;
+
                 }
+                gameOver = false;
                 makeBord();
                 makeDots();
 
