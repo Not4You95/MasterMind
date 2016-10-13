@@ -12,6 +12,7 @@ import model.Color;
 import model.Player;
 import model.ReadAndWrite;
 import model.RowCirckle;
+import java.lang.RuntimeException;
 
 /**
  *
@@ -109,7 +110,7 @@ public class MasterMindModel {
 
     public void saveToFile() throws IOException, AlertToUser {
 
-      //  if (Players.size() == 0) throw new AlertToUser("You need to creat a player!");
+        if (Players.size() == 0) throw new AlertToUser("You need to creat a player!");
             Players.get(PlayerNumer).lastGame(secretColors, Colors);
             boolean temp2 = file.writeToFile(Players);
             System.out.println(temp2);

@@ -65,6 +65,7 @@ public class MasterMind extends Application {
     private Scene scene;
     private Stage test, nameStage;
     private TextField name = null;
+    private Alert alert;
 
     @Override
     public void start(Stage primaryStage) {
@@ -145,10 +146,12 @@ public class MasterMind extends Application {
 
     }
 
-    public void alert(String info) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    public void alertToUserScen(String info) {
+         System.out.println("hej");
+        alert = new Alert(Alert.AlertType.INFORMATION);
        alert.setHeaderText("Error");
         alert.setTitle("Error!");
+        System.out.println("hej");
         alert.setContentText(info);
         alert.show();
     }
@@ -219,12 +222,17 @@ public class MasterMind extends Application {
                     System.out.println("Classnotfound");
                 } catch (IOException ex) {
                     System.out.println("ioException");
+                }catch(AlertToUser ex){
+                    alertToUserScen(ex.getMessage());
                 }
 
             } else if (event.getSource() == save) {
                 try {
                     controller.saveToFile();
                 } catch (IOException ex) {
+                }
+                catch(AlertToUser ex){
+                    alertToUserScen(ex.getMessage());
                 }
 
             } else if (event.getSource() == rules) {
@@ -237,8 +245,8 @@ public class MasterMind extends Application {
                 controller.newPlayer(name.getText().toString());
                 nameStage.close();
 
-            } else if (event.getSource() == AboutGame) {
-                alert("test");
+            } else if (event.getSource() == AboutGame) {               
+               
 
             }
 

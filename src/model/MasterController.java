@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import static javafx.application.Application.launch;
 import mastermind.MasterMind;
-
+import java.lang.RuntimeException;
 import javafx.scene.paint.Color;
 
 /**
@@ -54,21 +54,21 @@ public class MasterController {
         MasterModel.colorGenerated();
     }
 
-    public ArrayList<String> openFile(File file) throws ClassNotFoundException, IOException {
+    public ArrayList<String> openFile(File file) throws ClassNotFoundException, IOException,AlertToUser {
         ArrayList<String> temp = new ArrayList<String>();
-        try {
-
+        
             temp.addAll(MasterModel.ReadFromFile(file));
-        } catch (AlertToUser e) {
-            scen.alert(e.getMessage());
-        }
+            
+        
 
         return temp;
     }
 
-    public void saveToFile() throws IOException {
+    public void saveToFile() throws IOException,AlertToUser {
 
-        MasterModel.saveToFile();
+        
+             MasterModel.saveToFile();
+        
 
     }
 
@@ -79,6 +79,10 @@ public class MasterController {
     public void newPlayer(String name) {
         MasterModel.newPlayer(name);
 
+    }
+    
+    public void testAlert() throws AlertToUser {
+       throw new AlertToUser("test från contoler");
     }
 
 }
