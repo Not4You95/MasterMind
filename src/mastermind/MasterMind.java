@@ -95,8 +95,6 @@ public class MasterMind extends Application {
         greenButton.addEventHandler(ActionEvent.ACTION, new colorButton());
         blueButton.addEventHandler(ActionEvent.ACTION, new colorButton());
         purpilButton.addEventHandler(ActionEvent.ACTION, new colorButton());
-        makeBord();
-        makeDots();
 
         ProgressBar p2 = new ProgressBar();
 
@@ -106,6 +104,7 @@ public class MasterMind extends Application {
         save = new MenuItem("Save");
         save.addEventHandler(ActionEvent.ACTION, new menuChoise());
         newGame = new MenuItem("New Game");
+        newGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
         newPlayer = new MenuItem("New Player");
         newPlayer.addEventHandler(ActionEvent.ACTION, new menuChoise());
 
@@ -117,7 +116,7 @@ public class MasterMind extends Application {
         AboutGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
 
         rules.addEventHandler(ActionEvent.ACTION, new menuChoise());
-        about.getItems().addAll(rules,AboutGame);
+        about.getItems().addAll(rules, AboutGame);
 
         menuBar.getMenus().addAll(meny, about);
         ////////////////////////////////////////
@@ -147,9 +146,9 @@ public class MasterMind extends Application {
     }
 
     public void alertToUserScen(String info) {
-         System.out.println("hej");
+        System.out.println("hej");
         alert = new Alert(Alert.AlertType.INFORMATION);
-       alert.setHeaderText("Error");
+        alert.setHeaderText("Error");
         alert.setTitle("Error!");
         System.out.println("hej");
         alert.setContentText(info);
@@ -210,19 +209,22 @@ public class MasterMind extends Application {
 
             if (event.getSource() == open) {
                 try {
+
                     ArrayList<String> temp = new ArrayList<String>();
                     FileChooser fileChooser = new FileChooser();
                     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
                     fileChooser.getExtensionFilters().add(extFilter);
                     File file = fileChooser.showOpenDialog(test);
                     temp.addAll(controller.openFile(file));
+                    makeBord();
+                    makeDots();
                     uppDateCirckel(temp);
 
                 } catch (ClassNotFoundException ex) {
                     System.out.println("Classnotfound");
                 } catch (IOException ex) {
                     System.out.println("ioException");
-                }catch(AlertToUser ex){
+                } catch (AlertToUser ex) {
                     alertToUserScen(ex.getMessage());
                 }
 
@@ -230,14 +232,16 @@ public class MasterMind extends Application {
                 try {
                     controller.saveToFile();
                 } catch (IOException ex) {
-                }
-                catch(AlertToUser ex){
+                } catch (AlertToUser ex) {
                     alertToUserScen(ex.getMessage());
                 }
 
             } else if (event.getSource() == rules) {
 
             } else if (event.getSource() == newGame) {
+                userInputName();
+                makeBord();
+                makeDots();
 
             } else if (event.getSource() == newPlayer) {
                 userInputName();
@@ -245,8 +249,7 @@ public class MasterMind extends Application {
                 controller.newPlayer(name.getText().toString());
                 nameStage.close();
 
-            } else if (event.getSource() == AboutGame) {               
-               
+            } else if (event.getSource() == AboutGame) {
 
             }
 

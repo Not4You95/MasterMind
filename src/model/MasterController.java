@@ -81,8 +81,6 @@ public class MasterController {
 
     }
     
-    public void testAlert() throws AlertToUser {
-       throw new AlertToUser("test från contoler");
-    }
+   
 
 }

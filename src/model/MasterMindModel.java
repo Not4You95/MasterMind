@@ -100,6 +100,7 @@ public class MasterMindModel {
     public void newPlayer(String name) {
         
         Players.setName(name);
+       filename  = new File(name+".txt");
         PlayerNumer++;
 
     }
