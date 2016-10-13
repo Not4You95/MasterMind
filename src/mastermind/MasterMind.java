@@ -23,6 +23,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -96,8 +97,6 @@ public class MasterMind extends Application {
         blueButton.addEventHandler(ActionEvent.ACTION, new colorButton());
         purpilButton.addEventHandler(ActionEvent.ACTION, new colorButton());
 
-        ProgressBar p2 = new ProgressBar();
-
         Menu meny = new Menu("File");
         open = new MenuItem("Open");
         open.addEventHandler(ActionEvent.ACTION, new menuChoise());
@@ -129,7 +128,7 @@ public class MasterMind extends Application {
         pane.setCenter(grid);
         pane.setRight(dotsbox);
         pane.setTop(menuBar);
-        pane.setLeft(p2);
+
         BorderPane.setAlignment(botBox, Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(grid, Pos.CENTER);
         BorderPane.setAlignment(dotsbox, Pos.CENTER);
@@ -206,19 +205,25 @@ public class MasterMind extends Application {
 
         @Override
         public void handle(ActionEvent event) {
+            ProgressIndicator p1 = new ProgressIndicator();
+            pane.setTop(p1);
+            BorderPane.setAlignment(p1, Pos.TOP_CENTER);
 
             if (event.getSource() == open) {
                 try {
-
+                    File tempfile = null;
                     ArrayList<String> temp = new ArrayList<String>();
                     FileChooser fileChooser = new FileChooser();
                     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
                     fileChooser.getExtensionFilters().add(extFilter);
-                    File file = fileChooser.showOpenDialog(test);
-                    temp.addAll(controller.openFile(file));
-                    makeBord();
-                    makeDots();
-                    uppDateCirckel(temp);
+                    tempfile = fileChooser.showOpenDialog(test);
+                    if (tempfile != null) {
+
+                        temp.addAll(controller.openFile(tempfile));
+                        makeBord();
+                        makeDots();
+                        uppDateCirckel(temp);
+                    }
 
                 } catch (ClassNotFoundException ex) {
                     System.out.println("Classnotfound");
@@ -254,6 +259,7 @@ public class MasterMind extends Application {
             }
 
         }
+
     }
 
     private void userInputName() {
