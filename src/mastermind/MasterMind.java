@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -132,6 +133,8 @@ public class MasterMind extends Application {
         p1.setMaxHeight(50);
         pane.setCenter(p1);*/
 
+        makeBord();
+
         BorderPane.setAlignment(botBox, Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(grid, Pos.CENTER);
         BorderPane.setAlignment(dotsbox, Pos.CENTER);
@@ -180,6 +183,27 @@ public class MasterMind extends Application {
     }
 
     public void makeBord() {
+        GridPane scorePane = new GridPane();
+        Label wins = new Label("Wins");
+        wins.setTextFill(Color.WHITE);
+
+        Label games = new Label("Games");
+        games.setTextFill(Color.WHITE);
+        Line line = new Line();
+        line.setStartX(0);
+        line.setStartY(30);
+        line.setEndX(0);
+        line.setEndY(0);
+        line.setStroke(Color.WHITE);
+        line.setStrokeWidth(3);
+        scorePane.setVgap(10);
+        scorePane.setHgap(10);
+        scorePane.add(wins, 0, 0);
+        scorePane.add(line, 1, 0);
+        scorePane.add(games, 3, 0);
+
+        pane.setLeft(scorePane);
+
         for (int i = 0; i < 7; i++) {
 
             for (int j = 0; j < 4; j++) {
@@ -209,8 +233,6 @@ public class MasterMind extends Application {
 
         @Override
         public void handle(ActionEvent event) {
-
-           
 
             if (event.getSource() == open) {
                 try {

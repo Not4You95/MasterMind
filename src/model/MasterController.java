@@ -80,7 +80,13 @@ public class MasterController {
         MasterModel.newPlayer(name);
 
     }
+    public String getNrWins(String wins){
+        return wins;
+    }
     
+    public String getNrGames(String games){
+        return games;
+    }
    
 
 }

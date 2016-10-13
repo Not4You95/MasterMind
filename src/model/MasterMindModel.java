@@ -94,7 +94,7 @@ public class MasterMindModel {
             temp[i] = randomLight.toString();
         }
         secretColors = new RowCirckle(temp[0], temp[1], temp[2], temp[3]);
-        System.out.println("Slump: " + secretColors.toString());
+       
     }
 
     public void newPlayer(String name) {
