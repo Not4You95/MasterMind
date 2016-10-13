@@ -20,11 +20,19 @@ public class Player implements Serializable {
     private int numberOfGames = 0;
     private RowCirckle secretColor;
     private ArrayList<RowCirckle> userColors;
+    
+    public Player(){
+         userColors = new ArrayList<RowCirckle>();
+    }
 
     public Player(String name) {
         this.userName = name;
         userColors = new ArrayList<RowCirckle>();
 
+    }
+    
+    public void setName(String name){
+        this.userName = name;
     }
 
     public double getScore() {

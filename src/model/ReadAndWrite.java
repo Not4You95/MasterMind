@@ -22,17 +22,19 @@ public class ReadAndWrite {
     private File MyFile;
 
     public ReadAndWrite() {
-        //MyFile = new File("test.txt");
+        MyFile = new File("test.txt");
     }
 
-    public boolean writeToFile(ArrayList<Player> players) throws IOException,AlertToUser {
+    public boolean writeToFile(Player players,File file) throws IOException,AlertToUser {
         System.out.println("write");
         boolean sucses = false;
         ObjectOutputStream output = null;
+        MyFile = file;
 
         try {
             output = new ObjectOutputStream(new FileOutputStream(MyFile, false));
             output.writeObject(players);
+            System.out.println(players.getUserName());
             System.out.println("Serializing successfully");
             sucses = true;
             
@@ -59,14 +61,14 @@ public class ReadAndWrite {
      * @return true if saved, else false
      * @throws ClassNotFoundException
      */
-    public ArrayList<Player> readFromFile(File file) throws ClassNotFoundException, IOException,AlertToUser {
-        ArrayList<Player> playres = new ArrayList<Player>();
+    public Player readFromFile(File file) throws ClassNotFoundException, IOException,AlertToUser {
+        Player playres = new Player();
         ObjectInputStream input = null;
         MyFile = file;
        
         try {
             input = new ObjectInputStream(new FileInputStream(MyFile));
-            playres = (ArrayList<Player>) input.readObject();
+            playres = (Player) input.readObject();
             System.out.println("Deserializing successfully");
             
         } catch (ClassNotFoundException e) {

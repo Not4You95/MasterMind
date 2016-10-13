@@ -29,14 +29,14 @@ public class MasterMindModel {
     private boolean temp = false;
     private Color genrateColors;
     private RowCirckle secretColors;
-    private ArrayList<Player> Players;
+    private Player Players=null;
     private int PlayerNumer = 0;
     private ReadAndWrite file;
     private File filename;
 
     public MasterMindModel() {
         Colors = new ArrayList<RowCirckle>();
-        Players = new ArrayList<Player>();
+        Players = new Player();
         file = new ReadAndWrite();
     }
 
@@ -55,12 +55,12 @@ public class MasterMindModel {
 
             for (int j = 0; j < 4; j++) {
 
-                if (Colors.get(i).getRowCircel(j).toString() == secretColors.getRowCircel(j).toString()) {
+                if (Colors.get(i).getRowCircel(j).equals(secretColors.getRowCircel(j))) {
 
                     test[j] = "svart";
                     svart++;
 
-                } else if (secretColors.toString().contains(Colors.get(i).getRowCircel(j).toString())) {
+                } else if (secretColors.toString().contains(Colors.get(i).getRowCircel(j))) {
 
                     test[j] = "vit";
 
@@ -98,21 +98,22 @@ public class MasterMindModel {
     }
 
     public void newPlayer(String name) {
-        Player p = new Player(name);
-        Players.add(p);
+        
+        Players.setName(name);
+        PlayerNumer++;
 
     }
 
     public void getPlayers() {
 
-        System.out.println(Players.get(PlayerNumer).getUserName());
+        System.out.println(Players.getUserName());
     }
 
     public void saveToFile() throws IOException, AlertToUser {
-
-        if (Players.size() == 0) throw new AlertToUser("You need to creat a player!");
-            Players.get(PlayerNumer).lastGame(secretColors, Colors);
-            boolean temp2 = file.writeToFile(Players);
+        
+        if (PlayerNumer == 0) throw new AlertToUser("You need to creat a player!");
+            Players.lastGame(secretColors, Colors);
+            boolean temp2 = file.writeToFile(Players,filename);
             System.out.println(temp2);
 
         
@@ -120,10 +121,10 @@ public class MasterMindModel {
 
     public ArrayList<String> ReadFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
         filename = open;
-        Players.addAll(file.readFromFile(open));
-        ArrayList<String> temp = new ArrayList<String>();
-        secretColors = Players.get(PlayerNumer).getSecretClass();
-        Colors.addAll(Players.get(PlayerNumer).getColors());
+        Players=(file.readFromFile(open));
+        ArrayList<String> temp = new ArrayList<>();
+        secretColors = Players.getSecretClass();
+        Colors.addAll(Players.getColors());
 
         for (int i = 0; i < Colors.size(); i++) {
             for (int j = 0; j < 4; j++) {
@@ -131,7 +132,7 @@ public class MasterMindModel {
 
             }
         }
-        System.out.println("name: " + Players.get(PlayerNumer).getUserName());
+        System.out.println("name: " + Players.getUserName());
         return temp;
     }
 
