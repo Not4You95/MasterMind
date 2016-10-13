@@ -60,7 +60,7 @@ public class MasterMind extends Application {
     private MasterController controller;
     private BorderPane pane;
     private int colum = 0, row = 6;
-    private boolean gameOver = false;
+    private boolean gameOver = true;
     private int cirkelSize = 20;
     private Button redbutton, greenButton, blueButton, purpilButton, okName;
     private MenuItem open, save, rules, newGame, newPlayer, AboutGame;
@@ -133,8 +133,6 @@ public class MasterMind extends Application {
         p1.setMaxHeight(50);
         pane.setCenter(p1);*/
 
-        makeBord();
-
         BorderPane.setAlignment(botBox, Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(grid, Pos.CENTER);
         BorderPane.setAlignment(dotsbox, Pos.CENTER);
@@ -156,7 +154,6 @@ public class MasterMind extends Application {
         alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Error");
         alert.setTitle("Error!");
-        System.out.println("hej");
         alert.setContentText(info);
         alert.show();
     }
@@ -182,13 +179,15 @@ public class MasterMind extends Application {
         // System.out.println("colum: " + colum + "\n row: " + row);
     }
 
-    public void makeBord() {
+    public void score() {
+        Label winsNr,gamesNr,wins,games;
         GridPane scorePane = new GridPane();
-        Label wins = new Label("Wins");
+        wins = new Label("Wins");
         wins.setTextFill(Color.WHITE);
 
-        Label games = new Label("Games");
+        games = new Label("Games");
         games.setTextFill(Color.WHITE);
+        /////////////////////////////////
         Line line = new Line();
         line.setStartX(0);
         line.setStartY(30);
@@ -196,14 +195,25 @@ public class MasterMind extends Application {
         line.setEndY(0);
         line.setStroke(Color.WHITE);
         line.setStrokeWidth(3);
+        ///////////////////////////////
+        winsNr = new Label(controller.getNrWins());
+        winsNr.setTextFill(Color.WHITE);
+        gamesNr = new Label(controller.getNrGames());
+        gamesNr.setTextFill(Color.WHITE);
+        ///////////////////////////////
         scorePane.setVgap(10);
         scorePane.setHgap(10);
         scorePane.add(wins, 0, 0);
         scorePane.add(line, 1, 0);
         scorePane.add(games, 3, 0);
-
+        scorePane.add(winsNr, 0, 1);
+        scorePane.add(gamesNr, 3, 1);
         pane.setLeft(scorePane);
+        //////////////////////////////////
+    }
 
+    public void makeBord() {
+        score();
         for (int i = 0; i < 7; i++) {
 
             for (int j = 0; j < 4; j++) {
@@ -248,6 +258,8 @@ public class MasterMind extends Application {
                         makeBord();
                         makeDots();
                         uppDateCirckel(temp);
+                        score();
+                        gameOver=false;
                     }
 
                 } catch (ClassNotFoundException ex) {
@@ -269,7 +281,10 @@ public class MasterMind extends Application {
             } else if (event.getSource() == rules) {
 
             } else if (event.getSource() == newGame) {
-                userInputName();
+                if (controller.hasGamePlayers()) {
+                    userInputName();
+                    gameOver=false;
+                }
                 makeBord();
                 makeDots();
 
@@ -342,23 +357,27 @@ public class MasterMind extends Application {
         public void handle(ActionEvent event) {
             Color c = null;
             String co = "";
-            if (event.getSource() == redbutton) {
-                c = Color.RED;
-                co = "red";
-            } else if (event.getSource() == blueButton) {
-                c = Color.BLUE;
-                co = "blue";
-            } else if (event.getSource() == greenButton) {
-                c = Color.GREEN;
-                co = "green";
-            } else if (event.getSource() == purpilButton) {
-                c = Color.PURPLE;
-                co = "purpil";
+            if (!gameOver) {
+
+                if (event.getSource() == redbutton) {
+                    c = Color.RED;
+                    co = "red";
+                } else if (event.getSource() == blueButton) {
+                    c = Color.BLUE;
+                    co = "blue";
+                } else if (event.getSource() == greenButton) {
+                    c = Color.GREEN;
+                    co = "green";
+                } else if (event.getSource() == purpilButton) {
+                    c = Color.PURPLE;
+                    co = "purpil";
+                }
+
+                controller.equalColor(co);
+                ColorButtenChoise(c, row);
+                score();
+
             }
-
-            controller.equalColor(co);
-            ColorButtenChoise(c, row);
-
         }
     }
 

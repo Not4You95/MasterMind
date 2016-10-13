@@ -14,15 +14,15 @@ import java.util.ArrayList;
  */
 public class Player implements Serializable {
 
-    private String userName = "";
+    private String userName = null;
     private double score = 0.0;
     private int numberOfWins = 0;
     private int numberOfGames = 0;
     private RowCirckle secretColor;
     private ArrayList<RowCirckle> userColors;
-    
-    public Player(){
-         userColors = new ArrayList<RowCirckle>();
+
+    public Player() {
+        userColors = new ArrayList<RowCirckle>();
     }
 
     public Player(String name) {
@@ -30,8 +30,8 @@ public class Player implements Serializable {
         userColors = new ArrayList<RowCirckle>();
 
     }
-    
-    public void setName(String name){
+
+    public void setName(String name) {
         this.userName = name;
     }
 
@@ -56,8 +56,8 @@ public class Player implements Serializable {
     /**
      * @param numberOfWins the numberOfWins to set
      */
-    public void setNumberOfWins(int numberOfWins) {
-        this.numberOfWins = numberOfWins;
+    public void setNumberOfWins() {
+        numberOfWins++;
     }
 
     /**
@@ -70,24 +70,24 @@ public class Player implements Serializable {
     /**
      * @param numberOfGames the numberOfGames to set
      */
-    public void setNumberOfGames(int numberOfGames) {
-        this.numberOfGames = numberOfGames;
+    public void setNumberOfGames() {
+        numberOfGames++;
     }
 
     public void lastGame(RowCirckle secret, ArrayList<RowCirckle> colors) {
         secretColor = secret;
         userColors.addAll(colors);
 
-    }    
-    
-    public RowCirckle getSecretClass(){
+    }
+
+    public RowCirckle getSecretClass() {
         return secretColor;
     }
-    public ArrayList<RowCirckle> getColors(){
+
+    public ArrayList<RowCirckle> getColors() {
         ArrayList<RowCirckle> temp = new ArrayList<RowCirckle>();
         temp.addAll(userColors);
         return temp;
     }
-
 
 }

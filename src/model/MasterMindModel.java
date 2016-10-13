@@ -5,6 +5,7 @@
  */
 package model;
 
+import com.sun.scenario.effect.impl.Renderer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +44,6 @@ public class MasterMindModel {
     public void addColors(ArrayList temp) {
         cirkelRow = new RowCirckle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
         Colors.add(cirkelRow);
-
         System.out.println("User: " + Colors.get(row).toString());
         row++;
     }
@@ -51,6 +51,7 @@ public class MasterMindModel {
     public String[] guessOfColors() {
         String[] test = new String[4];
         int svart = 0;
+        System.out.println(secretColors.toString());
         for (int i = row - 1; i < row; i++) {
 
             for (int j = 0; j < 4; j++) {
@@ -76,11 +77,20 @@ public class MasterMindModel {
         for (String test1 : test) {
             System.out.println(test1);
         }
-        if (svart == 4) {
+        if (svart == 7) {
             String[] vinst = new String[1];
             vinst[0] = "vinst";
+            Players.setNumberOfGames();
+            Players.setNumberOfWins();
             return vinst;
 
+        }else if(row == 7){
+            String[] lost = new String[1];
+            lost[0]="los";
+            Players.setNumberOfGames();
+            System.out.println(Players.getNumberOfGames());
+            
+            return lost;
         }
 
         return test;
@@ -112,12 +122,20 @@ public class MasterMindModel {
 
     public void saveToFile() throws IOException, AlertToUser {
         
-        if (PlayerNumer == 0) throw new AlertToUser("You need to creat a player!");
+        if (Players.getUserName() == null) throw new AlertToUser("You need to creat a player!");
             Players.lastGame(secretColors, Colors);
             boolean temp2 = file.writeToFile(Players,filename);
             System.out.println(temp2);
 
         
+    }
+    public String getNrWins(){
+       // return Integer.toString(Players.getNumberOfWins());
+       return ""+Players.getNumberOfWins();
+    }
+    public String GetNrGames(){
+        //return Integer.toString(Players.getNumberOfGames());
+        return ""+Players.getNumberOfGames();
     }
 
     public ArrayList<String> ReadFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
@@ -135,6 +153,12 @@ public class MasterMindModel {
         }
         System.out.println("name: " + Players.getUserName());
         return temp;
+    }
+    public boolean hasGamePlayer(){
+        if (Players.getUserName() == null) {
+            return true;            
+        }
+        return false;
     }
 
 }

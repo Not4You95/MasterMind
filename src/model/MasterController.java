@@ -27,6 +27,7 @@ public class MasterController {
     public MasterController() {
         color = new ArrayList<String>();
         MasterModel = new MasterMindModel();
+        scen = new MasterMind();
 
     }
 
@@ -35,40 +36,39 @@ public class MasterController {
     }
 
     public void equalColor(String color) {
-        this.color.add(color);
-        System.out.println("hej");
+        String[] temp = new String[4];
+        this.color.add(color);      
         if (this.color.size() == 4) {
-            MasterModel.addColors(this.color);
-            System.out.println("hej!!!!!!!!!!!!!!!");
-            MasterModel.guessOfColors();
+            MasterModel.addColors(this.color);            
+           temp = MasterModel.guessOfColors();
             this.color.clear();
         }
+        if (temp[0]=="vinst") {
+           
+            
+        }else if(temp[0] == "los"){
+            
+        }
+            
 
     }
 
-    public void makeDot() {
-
-    }
+   
 
     public void newGame() {
         MasterModel.colorGenerated();
     }
 
-    public ArrayList<String> openFile(File file) throws ClassNotFoundException, IOException,AlertToUser {
+    public ArrayList<String> openFile(File file) throws ClassNotFoundException, IOException, AlertToUser {
         ArrayList<String> temp = new ArrayList<String>();
-        
-            temp.addAll(MasterModel.ReadFromFile(file));
-            
-        
+        temp.addAll(MasterModel.ReadFromFile(file));
 
         return temp;
     }
 
-    public void saveToFile() throws IOException,AlertToUser {
+    public void saveToFile() throws IOException, AlertToUser {
 
-        
-             MasterModel.saveToFile();
-        
+        MasterModel.saveToFile();
 
     }
 
@@ -80,13 +80,19 @@ public class MasterController {
         MasterModel.newPlayer(name);
 
     }
-    public String getNrWins(String wins){
-        return wins;
+
+    public String getNrWins() {
+        return MasterModel.getNrWins();
+        
     }
-    
-    public String getNrGames(String games){
-        return games;
+
+    public String getNrGames() {
+       return MasterModel.GetNrGames();
+        
     }
-   
+
+    public boolean hasGamePlayers() {
+        return MasterModel.hasGamePlayer();
+    }
 
 }
