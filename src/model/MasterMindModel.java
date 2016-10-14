@@ -26,7 +26,7 @@ public class MasterMindModel {
      */
     private ArrayList<RowCirckle> Colors;
     private ArrayList<RowCirckle> dots;
-    private int row = 0;
+    private int row = 0,losNr=7;
     private boolean temp = false;
     private Color genrateColors;
     private RowCirckle secretColors;
@@ -82,13 +82,16 @@ public class MasterMindModel {
             vinst[0] = "vinst";
             Players.setNumberOfGames();
             Players.setNumberOfWins();
+            
             return vinst;
 
-        } else if (row == 7) {
+        } else if ((row) == losNr) {
             String[] lost = new String[1];
             lost[0] = "los";
             Players.setNumberOfGames();
+            losNr=row+7;
             System.out.println(Players.getNumberOfGames());
+            
 
             return lost;
         }
@@ -104,13 +107,14 @@ public class MasterMindModel {
             temp[i] = randomLight.toString();
         }
         secretColors = new RowCirckle(temp[0], temp[1], temp[2], temp[3]);
+        
 
     }
 
     public void newPlayer(String name) {
 
         Players.setName(name);
-        filename = new File(name + ".txt");
+        filename = new File(name + ".txt");        
         PlayerNumer++;
 
     }

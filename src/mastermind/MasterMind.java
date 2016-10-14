@@ -153,23 +153,21 @@ public class MasterMind extends Application {
         alert.show();
     }
 
-    public void ColorButtenChoise(Color c, int a) {
+    public void ColorButtenChoise(Color c) {
 
         if (!gameOver) {
 
             Circle ci = new Circle(cirkelSize, c);
-            grid.add(ci, colum, a);
-
+            grid.add(ci, colum, row);
             colum++;
+            
             if (colum == 4 && row != 0) {
                 colum = 0;
                 row--;
             }
 
         }
-        if (row == 0 && colum == 4) {
-            gameOver = true;
-        }
+        
 
         // System.out.println("colum: " + colum + "\n row: " + row);
     }
@@ -306,17 +304,17 @@ public class MasterMind extends Application {
 
             if (temp.get(i).contains("red")) {
 
-                ColorButtenChoise(Color.RED, row);
+                ColorButtenChoise(Color.RED);
 
             } else if (temp.get(i).contains("green")) {
 
-                ColorButtenChoise(Color.GREEN, row);
+                ColorButtenChoise(Color.GREEN);
             } else if (temp.get(i).contains("purpil")) {
 
-                ColorButtenChoise(Color.PURPLE, row);
+                ColorButtenChoise(Color.PURPLE);
             } else if (temp.get(i).contains("blue")) {
 
-                ColorButtenChoise(Color.BLUE, row);
+                ColorButtenChoise(Color.BLUE);
             }
 
         }
@@ -345,7 +343,7 @@ public class MasterMind extends Application {
                 }
 
                 controller.equalColor(co);
-                ColorButtenChoise(c, row);
+                ColorButtenChoise(c);
 
             }
         }

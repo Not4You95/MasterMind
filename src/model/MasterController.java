@@ -37,7 +37,6 @@ public class MasterController {
             MasterModel.addColors(this.color);
             temp = MasterModel.guessOfColors();
             this.color.clear();
-
             scen.uppdatedots(getDots());
         }
         if (temp[0] == "vinst") {
@@ -49,6 +48,7 @@ public class MasterController {
             scen.alertToUserScen("You lost, what a losser!", "Warning: Losser alert", "Loser");
             scen.score();
             scen.SetGame(Boolean.TRUE);
+            
 
         }
 
