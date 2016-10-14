@@ -48,7 +48,6 @@ public class MasterController {
             scen.alertToUserScen("You lost, what a losser!", "Warning: Losser alert", "Loser");
             scen.score();
             scen.SetGame(Boolean.TRUE);
-            
 
         }
 
@@ -63,7 +62,7 @@ public class MasterController {
     }
 
     public void newGame() {
-
+        scen.SetGame(Boolean.TRUE);
         if (MasterModel.hasGamePlayer()) {
 
             scen.SetGame(Boolean.FALSE);
@@ -75,6 +74,11 @@ public class MasterController {
             scen.userInputName();
         }
 
+    }
+
+    public void showRules() {
+        scen.alertToUserScen("Its your job as the codebreaker to figure out the 4 colored secret code that the codemaster has generated. \n \n"
+                + "Each row is made up by four colors that is your guess of the secret code. If one of the color match the secret code and it is in the right place, the codemaster will mark it with a black circle on the right side of th board. If the guess has right color but in the wrong order the codemaster will mark it with a white circle. You have seven trys to figure out the secret code before your mind explodes.", "Rules", "Rules");
     }
 
     public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {

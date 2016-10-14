@@ -253,7 +253,7 @@ public class MasterMind extends Application {
                 }
 
             } else if (event.getSource() == rules) {
-
+                controller.showRules();
             } else if (event.getSource() == newGame) {
                controller.newGame();
 
@@ -264,6 +264,7 @@ public class MasterMind extends Application {
                 nameStage.close();
 
             } else if (event.getSource() == AboutGame) {
+                
 
             }
 
