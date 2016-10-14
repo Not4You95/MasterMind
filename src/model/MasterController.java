@@ -19,7 +19,6 @@ import javafx.scene.paint.Color;
  */
 public class MasterController {
 
-    private int colorNuber = 0;
     private ArrayList<String> color;
     private MasterMindModel MasterModel;
     private MasterMind scen;
@@ -31,10 +30,6 @@ public class MasterController {
 
     }
 
-    public void equalColor(Color c) {
-
-    }
-
     public void equalColor(String color) {
         String[] temp = new String[4];
         this.color.add(color);
@@ -42,13 +37,15 @@ public class MasterController {
             MasterModel.addColors(this.color);
             temp = MasterModel.guessOfColors();
             this.color.clear();
-            System.out.println("Dots: "+getDots().toString());
+
             scen.uppdatedots(getDots());
         }
         if (temp[0] == "vinst") {
+            scen.alertToUserScen("Congratilazen you are a code braker!", "Winner", "Winner!");
             scen.score();
 
         } else if (temp[0] == "los") {
+            scen.alertToUserScen("You lost, what a losser!", "Warning: Losser alert", "Loser");
             scen.score();
 
         }
@@ -66,7 +63,7 @@ public class MasterController {
     public void newGame() {
 
         if (MasterModel.hasGamePlayer()) {
-            
+
             scen.SetGame(Boolean.FALSE);
             scen.makeBord();
             scen.score();
@@ -74,11 +71,9 @@ public class MasterController {
 
         } else {
             scen.userInputName();
-            }
-
         }
 
-    
+    }
 
     public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {
         if (file != null) {
@@ -87,6 +82,7 @@ public class MasterController {
             scen.makeBord();
             scen.score();
             scen.uppdateCirckel(getColors());
+            System.out.println("Dots: " + getDots().toString());
             scen.uppdatedots(getDots());
             scen.SetGame(Boolean.FALSE);
         }

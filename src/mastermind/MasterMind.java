@@ -145,11 +145,10 @@ public class MasterMind extends Application {
 
     }
 
-    public void alertToUserScen(String info) {
-        System.out.println("hej");
+    public void alertToUserScen(String info,String head,String titel) {        
         alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Error");
-        alert.setTitle("Error!");
+        alert.setHeaderText(head);
+        alert.setTitle(titel);
         alert.setContentText(info);
         alert.show();
     }
@@ -239,20 +238,20 @@ public class MasterMind extends Application {
                     controller.openFile(tempfile);
 
                 } catch (AlertToUser ex) {
-                    alertToUserScen(ex.getMessage());
+                    alertToUserScen(ex.getMessage(),"Error","Error!");
                 } catch (ClassNotFoundException ex) {
-                    alertToUserScen(ex.getMessage());
+                    alertToUserScen(ex.getMessage(),"Error","Error!");
                 } catch (IOException ex) {
-                    alertToUserScen(ex.getMessage());
+                    alertToUserScen(ex.getMessage(),"Error","Error!");
                 }
 
             } else if (event.getSource() == save) {
                 try {
                     controller.saveToFile();
                 } catch (IOException ex) {
-                    alertToUserScen(ex.getMessage());
+                    alertToUserScen(ex.getMessage(),"Error","Error!");
                 } catch (AlertToUser ex) {
-                    alertToUserScen(ex.getMessage());
+                    alertToUserScen(ex.getMessage(),"Error","Error!");
                 }
 
             } else if (event.getSource() == rules) {
@@ -279,7 +278,7 @@ public class MasterMind extends Application {
         BorderPane pane2 = new BorderPane();
         nameStage = new Stage();
         Scene temp = new Scene(pane2, with, hight);
-        name = new TextField();
+        name = new TextField("Name");
         name.setMaxWidth(200);
         name.setMaxHeight(10);
         Label askname = new Label("Name: ");
@@ -351,18 +350,20 @@ public class MasterMind extends Application {
             }
         }
     }
+    
+   
 
     public void uppdatedots(ArrayList<String> dots) {
 
         for (int i = 0; i < dots.size(); i++) {
             System.out.println(dots.get(i));
-            if (dots.get(i) == "svart") {
-
+            if (dots.get(i).equals("svart")) {
+                
                 MakeDots(Color.BLACK);
 
             } else if (dots.get(i).equals("vit")) {
                 MakeDots(Color.WHITE);
-            }else{
+            }else if(dots.get(i).equals("inget")){
                 MakeDots(Color.CHOCOLATE);
             }
             

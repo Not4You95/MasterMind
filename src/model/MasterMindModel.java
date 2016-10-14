@@ -77,7 +77,7 @@ public class MasterMindModel {
         System.out.println("--------------------------------------");
 
         System.out.println(dots.get(row - 1).toString());
-        if (svart == 7) {
+        if (svart == 4) {
             String[] vinst = new String[1];
             vinst[0] = "vinst";
             Players.setNumberOfGames();
@@ -139,6 +139,13 @@ public class MasterMindModel {
     public String GetNrGames() {
         //return Integer.toString(Players.getNumberOfGames());
         return "" + Players.getNumberOfGames();
+    }
+    
+    public void setNrWins(){
+        Players.setNumberOfWins();
+    }
+    public void setNrGames(){
+        Players.setNumberOfGames();
     }
 
     public void ReadFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
