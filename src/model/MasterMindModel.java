@@ -30,7 +30,7 @@ public class MasterMindModel {
     private boolean temp = false;
     private Color genrateColors;
     private RowCirckle secretColors;
-    private Player Players=null;
+    private Player Players = null;
     private int PlayerNumer = 0;
     private ReadAndWrite file;
     private File filename;
@@ -43,7 +43,7 @@ public class MasterMindModel {
     }
 
     public void addColors(ArrayList temp) {
-       RowCirckle cirkelRow = new RowCirckle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
+        RowCirckle cirkelRow = new RowCirckle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
         Colors.add(cirkelRow);
         System.out.println("User: " + Colors.get(row).toString());
         row++;
@@ -69,14 +69,14 @@ public class MasterMindModel {
                 } else {
                     dotsString[j] = "inget";
                 }
-                
+
             }
             RowCirckle newdots = new RowCirckle(dotsString[0], dotsString[1], dotsString[2], dotsString[3]);
             dots.add(newdots);
         }
         System.out.println("--------------------------------------");
 
-        System.out.println(dots.get(row-1).toString());
+        System.out.println(dots.get(row - 1).toString());
         if (svart == 7) {
             String[] vinst = new String[1];
             vinst[0] = "vinst";
@@ -84,12 +84,12 @@ public class MasterMindModel {
             Players.setNumberOfWins();
             return vinst;
 
-        }else if(row == 7){
+        } else if (row == 7) {
             String[] lost = new String[1];
-            lost[0]="los";
+            lost[0] = "los";
             Players.setNumberOfGames();
             System.out.println(Players.getNumberOfGames());
-            
+
             return lost;
         }
 
@@ -104,13 +104,13 @@ public class MasterMindModel {
             temp[i] = randomLight.toString();
         }
         secretColors = new RowCirckle(temp[0], temp[1], temp[2], temp[3]);
-       
+
     }
 
     public void newPlayer(String name) {
-        
+
         Players.setName(name);
-        filename  = new File(name+".txt");
+        filename = new File(name + ".txt");
         PlayerNumer++;
 
     }
@@ -121,44 +121,48 @@ public class MasterMindModel {
     }
 
     public void saveToFile() throws IOException, AlertToUser {
-        
-        if (Players.getUserName() == null) throw new AlertToUser("You need to creat a player!");
-            Players.lastGame(secretColors, Colors,dots);
-            boolean temp2 = file.writeToFile(Players,filename);
-            System.out.println(temp2);
 
-        
+        if (Players.getUserName() == null) {
+            throw new AlertToUser("You need to creat a player!");
+        }
+        Players.lastGame(secretColors, Colors, dots);
+        boolean temp2 = file.writeToFile(Players, filename);
+        System.out.println(temp2);
+
     }
-    public String getNrWins(){
-       // return Integer.toString(Players.getNumberOfWins());
-       return ""+Players.getNumberOfWins();
+
+    public String getNrWins() {
+        // return Integer.toString(Players.getNumberOfWins());
+        return "" + Players.getNumberOfWins();
     }
-    public String GetNrGames(){
+
+    public String GetNrGames() {
         //return Integer.toString(Players.getNumberOfGames());
-        return ""+Players.getNumberOfGames();
+        return "" + Players.getNumberOfGames();
     }
 
     public void ReadFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
         filename = open;
-        Players=(file.readFromFile(open));
+        Players = file.readFromFile(open);
         ArrayList<String> temp = new ArrayList<>();
         secretColors = Players.getSecretClass();
         Colors.addAll(Players.getColors());
         dots.addAll(Players.getDots());
-       
+
         System.out.println("name: " + Players.getUserName());
-        
+
     }
-    public boolean hasGamePlayer(){
+
+    public boolean hasGamePlayer() {
         if (Players.getUserName() == null) {
-            return false;            
+            return false;
         }
         return true;
     }
-    
-    public ArrayList<String> getColors(){
+
+    public ArrayList<String> getColors() {
         ArrayList<String> temp = new ArrayList<String>();
-         for (int i = 0; i < Colors.size(); i++) {
+        for (int i = 0; i < Colors.size(); i++) {
             for (int j = 0; j < 4; j++) {
                 temp.add(Colors.get(i).getRowCircel(j));
 
@@ -166,9 +170,9 @@ public class MasterMindModel {
         }
         return temp;
     }
-    
-    public ArrayList<String> getDots(){
-       ArrayList<String> temp = new ArrayList<String>();
+
+    public ArrayList<String> getDots() {
+        ArrayList<String> temp = new ArrayList<String>();
         for (int i = 0; i < dots.size(); i++) {
             for (int j = 0; j < 4; j++) {
                 temp.add(dots.get(i).getRowCircel(j));

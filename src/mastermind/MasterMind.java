@@ -279,7 +279,7 @@ public class MasterMind extends Application {
         BorderPane pane2 = new BorderPane();
         nameStage = new Stage();
         Scene temp = new Scene(pane2, with, hight);
-        name = new TextField("Name");
+        name = new TextField();
         name.setMaxWidth(200);
         name.setMaxHeight(10);
         Label askname = new Label("Name: ");
@@ -328,8 +328,7 @@ public class MasterMind extends Application {
         @Override
         public void handle(ActionEvent event) {
             Color c = null;
-            String co = "";
-            ArrayList<String> dotStrings = new ArrayList<String>();
+            String co = "";           
             if (!gameOver) {
 
                 if (event.getSource() == redbutton) {
@@ -359,21 +358,21 @@ public class MasterMind extends Application {
             System.out.println(dots.get(i));
             if (dots.get(i) == "svart") {
 
-                MakeDots(Color.BLACK, dotrow);
+                MakeDots(Color.BLACK);
 
             } else if (dots.get(i).equals("vit")) {
-                MakeDots(Color.WHITE, dotrow);
+                MakeDots(Color.WHITE);
             }
 
         }
     }
 
-    public void MakeDots(Color c, int line) {
+    public void MakeDots(Color c) {
 
         if (!gameOver) {
 
             Circle ci = new Circle(10, c);
-            dotsbox.add(ci, dotcolum, line);
+            dotsbox.add(ci, dotcolum, dotrow);
             dotcolum++;
             if (dotcolum == 4 && dotrow != 0) {
                 dotcolum = 0;

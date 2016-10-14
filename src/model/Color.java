@@ -10,7 +10,7 @@ package model;
  * @author Robert
  */
 public enum Color {
-    red,blue,black,green,purpil;
+    red,blue,green,purpil;
     
     
     public static Color getRandom(){
