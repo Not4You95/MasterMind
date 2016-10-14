@@ -362,7 +362,10 @@ public class MasterMind extends Application {
 
             } else if (dots.get(i).equals("vit")) {
                 MakeDots(Color.WHITE);
+            }else{
+                MakeDots(Color.CHOCOLATE);
             }
+            
 
         }
     }
