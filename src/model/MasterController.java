@@ -63,6 +63,7 @@ public class MasterController {
 
     public void newGame() {
         scen.SetGame(Boolean.TRUE);
+        
         if (MasterModel.hasGamePlayer()) {
 
             scen.SetGame(Boolean.FALSE);

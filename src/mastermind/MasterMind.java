@@ -8,7 +8,7 @@ package mastermind;
 import java.io.File;
 import java.io.IOException;
 import static java.lang.Math.random;
-import java.time.Duration;
+
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +21,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -33,6 +34,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -41,12 +44,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import jdk.nashorn.internal.parser.TokenType;
 import model.*;
 
@@ -179,6 +186,7 @@ public class MasterMind extends Application {
         primaryStage.setMaxWidth(800);
         primaryStage.setTitle("MasterMind");
         primaryStage.setScene(scene);
+        animation();
         primaryStage.show();
 
     }
@@ -430,31 +438,37 @@ public class MasterMind extends Application {
     }
 
     public void animation() {
+        Group root = new Group();
         Group circles = new Group();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 5; i++) {
             Circle circle = new Circle(150, Color.web("white", 0.05));
             circle.setStrokeType(StrokeType.OUTSIDE);
             circle.setStroke(Color.web("white", 0.16));
             circle.setStrokeWidth(4);
             circles.getChildren().add(circle);
         }
-        root.getChildren().add(circles);
-
+      
+        Group blendModeGroup = new Group(new Group(circles));
+       // colors.setBlendMode(BlendMode.OVERLAY);
+        root.getChildren().add(blendModeGroup);
+        pane.setCenter(root);
+        circles.setEffect(new BoxBlur(10, 10, 3));
         Timeline timeline = new Timeline();
         for (Node circle : circles.getChildren()) {
             timeline.getKeyFrames().addAll(
                     new KeyFrame(Duration.ZERO, // set start position at 0
                             new KeyValue(circle.translateXProperty(), random() * 800),
-                            new KeyValue(circle.translateYProperty(), random() * 600)
-                    ),
+                            new KeyValue(circle.translateYProperty(), random() * 600)),
                     new KeyFrame(new Duration(40000), // set end position at 40s
                             new KeyValue(circle.translateXProperty(), random() * 800),
-                            new KeyValue(circle.translateYProperty(), random() * 600)
-                    )
-            );
+                            new KeyValue(circle.translateYProperty(), random() * 600)));
         }
-// play 40s of animation
+        // play 40s of animation
         timeline.play();
 
+    }
+    
+    public void stopAnimation(){
+        
     }
 }
