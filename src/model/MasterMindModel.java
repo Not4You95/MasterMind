@@ -138,27 +138,44 @@ public class MasterMindModel {
         return ""+Players.getNumberOfGames();
     }
 
-    public ArrayList<String> ReadFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
+    public void ReadFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
         filename = open;
         Players=(file.readFromFile(open));
         ArrayList<String> temp = new ArrayList<>();
         secretColors = Players.getSecretClass();
         Colors.addAll(Players.getColors());
-
-        for (int i = 0; i < Colors.size(); i++) {
-            for (int j = 0; j < 4; j++) {
-                temp.add(Colors.get(i).getRowCircel(j));
-
-            }
-        }
+        dots.addAll(Players.getDots());
+       
         System.out.println("name: " + Players.getUserName());
-        return temp;
+        
     }
     public boolean hasGamePlayer(){
         if (Players.getUserName() == null) {
             return true;            
         }
         return false;
+    }
+    
+    public ArrayList<String> getColors(){
+        ArrayList<String> temp = new ArrayList<String>();
+         for (int i = 0; i < Colors.size(); i++) {
+            for (int j = 0; j < 4; j++) {
+                temp.add(Colors.get(i).getRowCircel(j));
+
+            }
+        }
+        return temp;
+    }
+    
+    public ArrayList<String> getDots(){
+       ArrayList<String> temp = new ArrayList<String>();
+        for (int i = 0; i < dots.size(); i++) {
+            for (int j = 0; j < 4; j++) {
+                temp.add(dots.get(i).getRowCircel(j));
+
+            }
+        }
+        return temp;
     }
 
 }

@@ -24,10 +24,11 @@ public class MasterController {
     private MasterMindModel MasterModel;
     private MasterMind scen;
 
-    public MasterController() {
+    public MasterController(MasterMindModel MasterModel) {
         color = new ArrayList<String>();
-        MasterModel = new MasterMindModel();
+        MasterModel = MasterMindModel();
         scen = new MasterMind();
+        
 
     }
 
@@ -52,18 +53,20 @@ public class MasterController {
             
 
     }
-
-   
+    public ArrayList<String> getColors(){
+        return MasterModel.getColors();
+    }
+    public ArrayList<String> getDots(){
+        return MasterModel.getDots();
+    }   
 
     public void newGame() {
         MasterModel.colorGenerated();
     }
 
-    public ArrayList<String> openFile(File file) throws ClassNotFoundException, IOException, AlertToUser {
-        ArrayList<String> temp = new ArrayList<String>();
-        temp.addAll(MasterModel.ReadFromFile(file));
-
-        return temp;
+    public void openFile(File file) throws ClassNotFoundException, IOException, AlertToUser {       
+        MasterModel.ReadFromFile(file); 
+        
     }
 
     public void saveToFile() throws IOException, AlertToUser {

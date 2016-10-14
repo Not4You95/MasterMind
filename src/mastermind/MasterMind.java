@@ -59,7 +59,7 @@ public class MasterMind extends Application {
     private BoardLayout board;
     private MasterController controller;
     private BorderPane pane;
-    private int colum = 0, row = 6;
+    private int colum = 0, row = 6,dotcolum=0,dotrow=6;
     private boolean gameOver = true;
     private int cirkelSize = 20;
     private Button redbutton, greenButton, blueButton, purpilButton, okName;
@@ -73,7 +73,7 @@ public class MasterMind extends Application {
     public void start(Stage primaryStage) {
         grid = new GridPane();
         pane = new BorderPane();
-        controller = new MasterController();
+        controller = new MasterController(this);
         dotsbox = new GridPane();
         MenuBar menuBar = new MenuBar();
 
@@ -246,20 +246,24 @@ public class MasterMind extends Application {
 
             if (event.getSource() == open) {
                 try {
+                     gameOver = false;
                     File tempfile = null;
-                    ArrayList<String> temp = new ArrayList<String>();
+                    ArrayList<String> color = new ArrayList<String>();
+                    ArrayList<String> dots = new ArrayList<String>();
                     FileChooser fileChooser = new FileChooser();
                     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
                     fileChooser.getExtensionFilters().add(extFilter);
                     tempfile = fileChooser.showOpenDialog(test);
                     if (tempfile != null) {
-
-                        temp.addAll(controller.openFile(tempfile));
+                       
+                        controller.openFile(tempfile);
+                        color.addAll(controller.getColors());
+                        dots.addAll(controller.getDots());
                         makeBord();
-                        makeDots();
-                        uppDateCirckel(temp);
+                        uppdatedots(dots);
+                        uppDateCirckel(color);
                         score();
-                        gameOver = false;
+
                     }
 
                 } catch (ClassNotFoundException ex) {
@@ -332,6 +336,7 @@ public class MasterMind extends Application {
     }
 
     private void uppDateCirckel(ArrayList<String> temp) {
+
         for (int i = 0; i < temp.size(); i++) {
 
             if (temp.get(i).contains("red")) {
@@ -358,6 +363,7 @@ public class MasterMind extends Application {
         public void handle(ActionEvent event) {
             Color c = null;
             String co = "";
+            ArrayList<String> dotStrings = new ArrayList<String>();
             if (!gameOver) {
 
                 if (event.getSource() == redbutton) {
@@ -377,8 +383,41 @@ public class MasterMind extends Application {
                 controller.equalColor(co);
                 ColorButtenChoise(c, row);
                 score();
+                dotStrings.addAll(controller.getDots());
+                uppdatedots(dotStrings);
 
             }
+        }
+    }
+    public void uppdatedots(ArrayList<String> dots){
+       
+        for (int i = 0; i < dots.size(); i++) {
+            System.out.println(dots.get(i));
+            if (dots.get(i) == "svart") {
+                
+                MakeDots(Color.BLACK, dotrow);
+                
+            }
+            else if(dots.get(i).equals("vit"))
+                MakeDots(Color.WHITE, dotrow);
+            
+            
+        }
+    }
+    
+    public void MakeDots(Color c,int line){
+        System.out.println(gameOver);
+        if (!gameOver) {
+
+            Circle ci = new Circle(cirkelSize, c);
+            dotsbox.add(ci, dotcolum, line);
+
+            dotcolum++;
+            if (dotcolum == 4 && dotrow != 0) {
+                dotcolum = 0;
+                dotrow--;
+            }
+
         }
     }
 
