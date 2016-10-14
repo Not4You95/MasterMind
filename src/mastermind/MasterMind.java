@@ -29,6 +29,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -55,7 +56,7 @@ public class MasterMind extends Application {
     private Circle brown = new Circle(30, Color.BROWN);
     private HBox botBox;
 
-    private GridPane grid, dotsbox;    
+    private GridPane grid, dotsbox;
     private MasterController controller;
     private BorderPane pane;
     private int colum = 0, row = 6, dotcolum = 0, dotrow = 6;
@@ -83,12 +84,18 @@ public class MasterMind extends Application {
         dotsbox.setVgap(50);
         dotsbox.setAlignment(Pos.CENTER_RIGHT);
 
-        
-
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream("Wood2.jpg")));
         pane.getChildren().addAll(image);
 
-        redbutton = new Button(null, red);
+        redbutton = new Button(null);
+
+        redbutton.setStyle("-fx-background-radius: 5em; "
+                + "-fx-min-width: 50px; "
+                + "-fx-min-height: 50px; "
+                + "-fx-max-width: 50px; "
+                + "-fx-max-height: 50px;"
+                + "-fx-background: RED");
+
         greenButton = new Button(null, green);
         blueButton = new Button(null, blue);
         purpilButton = new Button(null, purpil);
@@ -114,9 +121,17 @@ public class MasterMind extends Application {
         AboutGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
         rules.addEventHandler(ActionEvent.ACTION, new menuChoise());
         about.getItems().addAll(rules, AboutGame);
+        menuBar.setStyle("-fx-background-color: #a6b5c9,linear-gradient(#303842 0%, #3e5577 20%, #375074 100%),linear-gradient(#768aa5 0%, #849cbb 5%, #5877a2 50%, #486a9a 51%, #4a6c9b 100%);"
+                + "-fx-background-insets: 0 0 -1 0,0,1;"
+                + "-fx-background-radius: 5,5,4;"
+                + "-fx-padding: 7 30 7 30;"
+                + "-fx-text-fill: #242d35;"
+                + "-fx-font-family: Helvetica;"
+                + "-fx-font-size: 12px;"
+                + "-fx-text-fill: Withe;");
         menuBar.getMenus().addAll(meny, about);
         ////////////////////////////////////////
-        
+
         botBox = new HBox(redbutton, greenButton, blueButton, purpilButton);
         botBox.setAlignment(Pos.CENTER);
         botBox.setSpacing(10);
@@ -145,7 +160,7 @@ public class MasterMind extends Application {
 
     }
 
-    public void alertToUserScen(String info,String head,String titel) {        
+    public void alertToUserScen(String info, String head, String titel) {
         alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(head);
         alert.setTitle(titel);
@@ -160,14 +175,13 @@ public class MasterMind extends Application {
             Circle ci = new Circle(cirkelSize, c);
             grid.add(ci, colum, row);
             colum++;
-            
+
             if (colum == 4 && row != 0) {
                 colum = 0;
                 row--;
             }
 
         }
-        
 
         // System.out.println("colum: " + colum + "\n row: " + row);
     }
@@ -205,7 +219,7 @@ public class MasterMind extends Application {
         //////////////////////////////////
     }
 
-    public void makeBord() {       
+    public void makeBord() {
         for (int i = 0; i < 7; i++) {
 
             for (int j = 0; j < 4; j++) {
@@ -228,7 +242,7 @@ public class MasterMind extends Application {
             if (event.getSource() == open) {
                 try {
                     gameOver = false;
-                    File tempfile = null;                   
+                    File tempfile = null;
                     FileChooser fileChooser = new FileChooser();
                     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
                     fileChooser.getExtensionFilters().add(extFilter);
@@ -236,26 +250,26 @@ public class MasterMind extends Application {
                     controller.openFile(tempfile);
 
                 } catch (AlertToUser ex) {
-                    alertToUserScen(ex.getMessage(),"Error","Error!");
+                    alertToUserScen(ex.getMessage(), "Error", "Error!");
                 } catch (ClassNotFoundException ex) {
-                    alertToUserScen(ex.getMessage(),"Error","Error!");
+                    alertToUserScen(ex.getMessage(), "Error", "Error!");
                 } catch (IOException ex) {
-                    alertToUserScen(ex.getMessage(),"Error","Error!");
+                    alertToUserScen(ex.getMessage(), "Error", "Error!");
                 }
 
             } else if (event.getSource() == save) {
                 try {
                     controller.saveToFile();
                 } catch (IOException ex) {
-                    alertToUserScen(ex.getMessage(),"Error","Error!");
+                    alertToUserScen(ex.getMessage(), "Error", "Error!");
                 } catch (AlertToUser ex) {
-                    alertToUserScen(ex.getMessage(),"Error","Error!");
+                    alertToUserScen(ex.getMessage(), "Error", "Error!");
                 }
 
             } else if (event.getSource() == rules) {
                 controller.showRules();
             } else if (event.getSource() == newGame) {
-               controller.newGame();
+                controller.newGame();
 
             } else if (event.getSource() == newPlayer) {
                 userInputName();
@@ -264,7 +278,6 @@ public class MasterMind extends Application {
                 nameStage.close();
 
             } else if (event.getSource() == AboutGame) {
-                
 
             }
 
@@ -326,7 +339,7 @@ public class MasterMind extends Application {
         @Override
         public void handle(ActionEvent event) {
             Color c = null;
-            String co = "";           
+            String co = "";
             if (!gameOver) {
 
                 if (event.getSource() == redbutton) {
@@ -349,23 +362,20 @@ public class MasterMind extends Application {
             }
         }
     }
-    
-   
 
     public void uppdatedots(ArrayList<String> dots) {
 
         for (int i = 0; i < dots.size(); i++) {
             System.out.println(dots.get(i));
             if (dots.get(i).equals("svart")) {
-                
+
                 MakeDots(Color.BLACK);
 
             } else if (dots.get(i).equals("vit")) {
                 MakeDots(Color.WHITE);
-            }else if(dots.get(i).equals("inget")){
+            } else if (dots.get(i).equals("inget")) {
                 MakeDots(Color.CHOCOLATE);
             }
-            
 
         }
     }
@@ -384,14 +394,15 @@ public class MasterMind extends Application {
 
         }
     }
-    public void SetGame(Boolean game){
-        gameOver  = game;
+
+    public void SetGame(Boolean game) {
+        gameOver = game;
         if (game) {
-            row=6;
-            colum=0;
-            dotrow=6;
-            dotcolum=0;
-            
+            row = 6;
+            colum = 0;
+            dotrow = 6;
+            dotcolum = 0;
+
         }
     }
 
