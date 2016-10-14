@@ -14,18 +14,25 @@ import java.util.ArrayList;
 public class RowCirckelAndDots {
     private ArrayList<RowCirckle> colors;
     private ArrayList<RowCirckle> dots;
-    
+    /**
+     *
+     * constructor
+     */
     public RowCirckelAndDots(){
         colors = new ArrayList<RowCirckle>();
         dots = new ArrayList<RowCirckle>();        
     }
     
+    /**
+     *
+     * constructor
+     */ 
     public RowCirckelAndDots(RowCirckle row){
         colors.add(row);
     }
 
     /**
-     * @return the colors
+     * @return an arraylist of colors
      */
     public ArrayList<RowCirckle> getColors() {
         ArrayList<RowCirckle> temp = new ArrayList<RowCirckle>();
