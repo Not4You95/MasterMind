@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import java.io.Serializable;
@@ -18,15 +14,14 @@ public class RowCirckle implements Serializable{
     private ArrayList<String> color;
     private int colum = 0;
 
+   /**
+    *
+    * constructor
+    */
     public RowCirckle() {
         color = new ArrayList<String>();
     }
-
-    /**
-     * @return the color
-     */
-    
-
+   
     /**
      * @param color the color to set
      */
@@ -39,21 +34,32 @@ public class RowCirckle implements Serializable{
         color.add(color4);
         
     }
-
+   /**
+    *
+    *@return
+    */
     public String toString() {
        
         return color.toString();
     }
+   
+   /**
+    *
+    * @return the number of color
+    */
     public int Size(){
         return color.size();
     }
+   
+   /**
+    *
+    * @return tthe color of an index
+    */
     public String getRowCircel(int index){
         return color.get(index).toString();
     }
-
-   
-        
-    }
+ 
+}
   
     
 
