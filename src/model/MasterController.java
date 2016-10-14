@@ -42,6 +42,7 @@ public class MasterController {
             MasterModel.addColors(this.color);
             temp = MasterModel.guessOfColors();
             this.color.clear();
+            System.out.println("Dots: "+getDots().toString());
             scen.uppdatedots(getDots());
         }
         if (temp[0] == "vinst") {
