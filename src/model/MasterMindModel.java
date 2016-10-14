@@ -174,11 +174,12 @@ public class MasterMindModel {
     public ArrayList<String> getDots() {
         ArrayList<String> temp = new ArrayList<String>();
         int nr = 1;
-        System.out.println(row);
+        
         if (row != 0) {
             nr = row;
         } 
-        for (int i = nr; i < dots.size(); i++) {
+        System.out.println("row: "+row+"nr: "+nr);
+        for (int i = nr-1; i < dots.size(); i++) {
             for (int j = 0; j < 4; j++) {
                 temp.add(dots.get(i).getRowCircel(j));
             }
