@@ -151,9 +151,9 @@ public class MasterMindModel {
     }
     public boolean hasGamePlayer(){
         if (Players.getUserName() == null) {
-            return true;            
+            return false;            
         }
-        return false;
+        return true;
     }
     
     public ArrayList<String> getColors(){

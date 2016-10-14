@@ -55,8 +55,7 @@ public class MasterMind extends Application {
     private Circle brown = new Circle(30, Color.BROWN);
     private HBox botBox;
 
-    private GridPane grid, dotsbox;
-    private BoardLayout board;
+    private GridPane grid, dotsbox;    
     private MasterController controller;
     private BorderPane pane;
     private int colum = 0, row = 6, dotcolum = 0, dotrow = 6;
@@ -65,7 +64,7 @@ public class MasterMind extends Application {
     private Button redbutton, greenButton, blueButton, purpilButton, okName;
     private MenuItem open, save, rules, newGame, newPlayer, AboutGame;
     private Scene scene;
-    private Stage test, nameStage;
+    private Stage fileStage, nameStage;
     private TextField name = null;
     private Alert alert;
 
@@ -84,7 +83,7 @@ public class MasterMind extends Application {
         dotsbox.setVgap(50);
         dotsbox.setAlignment(Pos.CENTER_RIGHT);
 
-        controller.newGame();
+        
 
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream("Wood2.jpg")));
         pane.getChildren().addAll(image);
@@ -107,21 +106,18 @@ public class MasterMind extends Application {
         newGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
         newPlayer = new MenuItem("New Player");
         newPlayer.addEventHandler(ActionEvent.ACTION, new menuChoise());
-
+/////////////////////////////////////////////////////////////////////////////
         meny.getItems().addAll(newGame, open, save, newPlayer);
-
         Menu about = new Menu("About");
         rules = new MenuItem("Rules");
         AboutGame = new MenuItem("About us");
         AboutGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
-
         rules.addEventHandler(ActionEvent.ACTION, new menuChoise());
         about.getItems().addAll(rules, AboutGame);
-
         menuBar.getMenus().addAll(meny, about);
         ////////////////////////////////////////
+        
         botBox = new HBox(redbutton, greenButton, blueButton, purpilButton);
-
         botBox.setAlignment(Pos.CENTER);
         botBox.setSpacing(10);
         ////////////////////////////////////////////   
@@ -212,8 +208,7 @@ public class MasterMind extends Application {
         //////////////////////////////////
     }
 
-    public void makeBord() {
-        score();
+    public void makeBord() {       
         for (int i = 0; i < 7; i++) {
 
             for (int j = 0; j < 4; j++) {
@@ -222,7 +217,6 @@ public class MasterMind extends Application {
                 Circle dots = new Circle(10, Color.CHOCOLATE);
                 dotsbox.add(dots, j, i);
             }
-
         }
     }
 
@@ -237,15 +231,18 @@ public class MasterMind extends Application {
             if (event.getSource() == open) {
                 try {
                     gameOver = false;
-                    File tempfile = null;
-                    ArrayList<String> color = new ArrayList<String>();
-                    ArrayList<String> dots = new ArrayList<String>();
+                    File tempfile = null;                   
                     FileChooser fileChooser = new FileChooser();
                     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
                     fileChooser.getExtensionFilters().add(extFilter);
-                    tempfile = fileChooser.showOpenDialog(test);
+                    tempfile = fileChooser.showOpenDialog(fileStage);
+                    controller.openFile(tempfile);
 
                 } catch (AlertToUser ex) {
+                    alertToUserScen(ex.getMessage());
+                } catch (ClassNotFoundException ex) {
+                    alertToUserScen(ex.getMessage());
+                } catch (IOException ex) {
                     alertToUserScen(ex.getMessage());
                 }
 
@@ -253,6 +250,7 @@ public class MasterMind extends Application {
                 try {
                     controller.saveToFile();
                 } catch (IOException ex) {
+                    alertToUserScen(ex.getMessage());
                 } catch (AlertToUser ex) {
                     alertToUserScen(ex.getMessage());
                 }
@@ -260,12 +258,7 @@ public class MasterMind extends Application {
             } else if (event.getSource() == rules) {
 
             } else if (event.getSource() == newGame) {
-                if (controller.hasGamePlayers()) {
-                    userInputName();
-
-                }
-                gameOver = false;
-                makeBord();
+               controller.newGame();
 
             } else if (event.getSource() == newPlayer) {
                 userInputName();
@@ -281,7 +274,7 @@ public class MasterMind extends Application {
 
     }
 
-    private void userInputName() {
+    public void userInputName() {
         int with = 300, hight = 150;
         BorderPane pane2 = new BorderPane();
         nameStage = new Stage();
@@ -330,7 +323,7 @@ public class MasterMind extends Application {
         }
     }
 
-    private class colorButton implements EventHandler<ActionEvent> {
+    public class colorButton implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent event) {
@@ -381,7 +374,6 @@ public class MasterMind extends Application {
 
             Circle ci = new Circle(10, c);
             dotsbox.add(ci, dotcolum, line);
-
             dotcolum++;
             if (dotcolum == 4 && dotrow != 0) {
                 dotcolum = 0;
@@ -389,6 +381,9 @@ public class MasterMind extends Application {
             }
 
         }
+    }
+    public void SetGame(Boolean game){
+        gameOver  = game;
     }
 
 }

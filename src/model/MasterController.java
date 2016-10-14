@@ -63,16 +63,34 @@ public class MasterController {
     }
 
     public void newGame() {
-        MasterModel.colorGenerated();
+        System.out.println("new game");
+        boolean round = true;
+        while (!hasGamePlayers()) {
+            if (round) {
+                scen.userInputName();
+            }
+            round = false;
+        }
+        System.out.println(hasGamePlayers());
+        if (hasGamePlayers()) {
+            System.out.println(hasGamePlayers());
+            scen.SetGame(Boolean.FALSE);
+            scen.makeBord();
+            scen.score();
+            MasterModel.colorGenerated();
+        }
+
     }
 
     public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {
         if (file != null) {
+            System.out.println(file.toString());
             MasterModel.ReadFromFile(file);
             scen.makeBord();
             scen.score();
             scen.uppdateCirckel(getColors());
             scen.uppdatedots(getDots());
+            scen.SetGame(Boolean.FALSE);
         }
 
     }
