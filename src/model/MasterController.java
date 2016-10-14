@@ -43,10 +43,12 @@ public class MasterController {
         if (temp[0] == "vinst") {
             scen.alertToUserScen("Congratilazen you are a code braker!", "Winner", "Winner!");
             scen.score();
+            scen.SetGame(Boolean.TRUE);
 
         } else if (temp[0] == "los") {
             scen.alertToUserScen("You lost, what a losser!", "Warning: Losser alert", "Loser");
             scen.score();
+            scen.SetGame(Boolean.TRUE);
 
         }
 

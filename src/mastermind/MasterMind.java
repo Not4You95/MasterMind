@@ -387,6 +387,13 @@ public class MasterMind extends Application {
     }
     public void SetGame(Boolean game){
         gameOver  = game;
+        if (game) {
+            row=6;
+            colum=0;
+            dotrow=6;
+            dotcolum=0;
+            
+        }
     }
 
 }
