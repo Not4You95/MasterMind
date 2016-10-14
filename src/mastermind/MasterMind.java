@@ -7,14 +7,20 @@ package mastermind;
 
 import java.io.File;
 import java.io.IOException;
+import static java.lang.Math.random;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
@@ -38,6 +44,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import jdk.nashorn.internal.parser.TokenType;
@@ -76,7 +83,7 @@ public class MasterMind extends Application {
         controller = new MasterController(this);
         dotsbox = new GridPane();
         MenuBar menuBar = new MenuBar();
-        
+
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(30);
@@ -153,15 +160,12 @@ public class MasterMind extends Application {
         botBox = new HBox(redbutton, greenButton, blueButton, purpilButton);
         botBox.setAlignment(Pos.CENTER);
         botBox.setSpacing(20);
-        
+
         ////////////////////////////////////////////   
         pane.setBottom(botBox);
         pane.setCenter(grid);
         pane.setRight(dotsbox);
         pane.setTop(menuBar);
-        /*ProgressIndicator p1 = new ProgressIndicator();
-        p1.setMaxHeight(50);
-        pane.setCenter(p1);*/
 
         BorderPane.setAlignment(botBox, Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(grid, Pos.CENTER);
@@ -175,7 +179,6 @@ public class MasterMind extends Application {
         primaryStage.setMaxWidth(800);
         primaryStage.setTitle("MasterMind");
         primaryStage.setScene(scene);
-        
         primaryStage.show();
 
     }
@@ -426,4 +429,32 @@ public class MasterMind extends Application {
         }
     }
 
+    public void animation() {
+        Group circles = new Group();
+        for (int i = 0; i < 30; i++) {
+            Circle circle = new Circle(150, Color.web("white", 0.05));
+            circle.setStrokeType(StrokeType.OUTSIDE);
+            circle.setStroke(Color.web("white", 0.16));
+            circle.setStrokeWidth(4);
+            circles.getChildren().add(circle);
+        }
+        root.getChildren().add(circles);
+
+        Timeline timeline = new Timeline();
+        for (Node circle : circles.getChildren()) {
+            timeline.getKeyFrames().addAll(
+                    new KeyFrame(Duration.ZERO, // set start position at 0
+                            new KeyValue(circle.translateXProperty(), random() * 800),
+                            new KeyValue(circle.translateYProperty(), random() * 600)
+                    ),
+                    new KeyFrame(new Duration(40000), // set end position at 40s
+                            new KeyValue(circle.translateXProperty(), random() * 800),
+                            new KeyValue(circle.translateYProperty(), random() * 600)
+                    )
+            );
+        }
+// play 40s of animation
+        timeline.play();
+
+    }
 }

@@ -82,6 +82,7 @@ public class MasterMindModel {
             vinst[0] = "vinst";
             Players.setNumberOfGames();
             Players.setNumberOfWins();
+            losNr=row+7;
             
             return vinst;
 
