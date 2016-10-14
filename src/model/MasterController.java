@@ -24,11 +24,10 @@ public class MasterController {
     private MasterMindModel MasterModel;
     private MasterMind scen;
 
-    public MasterController(MasterMindModel MasterModel) {
+    public MasterController(MasterMind MasterClass) {
         color = new ArrayList<String>();
-        MasterModel = MasterMindModel();
-        scen = new MasterMind();
-        
+        MasterModel = new MasterMindModel();
+        scen = MasterClass;
 
     }
 
@@ -38,39 +37,47 @@ public class MasterController {
 
     public void equalColor(String color) {
         String[] temp = new String[4];
-        this.color.add(color);      
+        this.color.add(color);
         if (this.color.size() == 4) {
-            MasterModel.addColors(this.color);            
-           temp = MasterModel.guessOfColors();
+            MasterModel.addColors(this.color);
+            temp = MasterModel.guessOfColors();
             this.color.clear();
+            scen.uppdatedots(getDots());
         }
-        if (temp[0]=="vinst") {
-           
-            
-        }else if(temp[0] == "los"){
-            
+        if (temp[0] == "vinst") {
+            scen.score();
+
+        } else if (temp[0] == "los") {
+            scen.score();
+
         }
-            
 
     }
-    public ArrayList<String> getColors(){
+
+    public ArrayList<String> getColors() {
         return MasterModel.getColors();
     }
-    public ArrayList<String> getDots(){
+
+    public ArrayList<String> getDots() {
         return MasterModel.getDots();
-    }   
+    }
 
     public void newGame() {
         MasterModel.colorGenerated();
     }
 
-    public void openFile(File file) throws ClassNotFoundException, IOException, AlertToUser {       
-        MasterModel.ReadFromFile(file); 
-        
+    public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {
+        if (file != null) {
+            MasterModel.ReadFromFile(file);
+            scen.makeBord();
+            scen.score();
+            scen.uppdateCirckel(getColors());
+            scen.uppdatedots(getDots());
+        }
+
     }
 
     public void saveToFile() throws IOException, AlertToUser {
-
         MasterModel.saveToFile();
 
     }
@@ -86,12 +93,12 @@ public class MasterController {
 
     public String getNrWins() {
         return MasterModel.getNrWins();
-        
+
     }
 
     public String getNrGames() {
-       return MasterModel.GetNrGames();
-        
+        return MasterModel.GetNrGames();
+
     }
 
     public boolean hasGamePlayers() {

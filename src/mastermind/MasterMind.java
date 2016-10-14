@@ -59,7 +59,7 @@ public class MasterMind extends Application {
     private BoardLayout board;
     private MasterController controller;
     private BorderPane pane;
-    private int colum = 0, row = 6,dotcolum=0,dotrow=6;
+    private int colum = 0, row = 6, dotcolum = 0, dotrow = 6;
     private boolean gameOver = true;
     private int cirkelSize = 20;
     private Button redbutton, greenButton, blueButton, purpilButton, okName;
@@ -219,18 +219,8 @@ public class MasterMind extends Application {
             for (int j = 0; j < 4; j++) {
                 Circle temp = new Circle(cirkelSize, Color.AQUA);
                 grid.add(temp, j, i);
-            }
-
-        }
-    }
-
-    public void makeDots() {
-
-        for (int i = 0; i < 7; i++) {
-
-            for (int j = 0; j < 4; j++) {
-                Circle temp = new Circle(10, Color.CHOCOLATE);
-                dotsbox.add(temp, j, i);
+                Circle dots = new Circle(10, Color.CHOCOLATE);
+                dotsbox.add(dots, j, i);
             }
 
         }
@@ -246,7 +236,7 @@ public class MasterMind extends Application {
 
             if (event.getSource() == open) {
                 try {
-                     gameOver = false;
+                    gameOver = false;
                     File tempfile = null;
                     ArrayList<String> color = new ArrayList<String>();
                     ArrayList<String> dots = new ArrayList<String>();
@@ -254,22 +244,7 @@ public class MasterMind extends Application {
                     FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
                     fileChooser.getExtensionFilters().add(extFilter);
                     tempfile = fileChooser.showOpenDialog(test);
-                    if (tempfile != null) {
-                       
-                        controller.openFile(tempfile);
-                        color.addAll(controller.getColors());
-                        dots.addAll(controller.getDots());
-                        makeBord();
-                        uppdatedots(dots);
-                        uppDateCirckel(color);
-                        score();
 
-                    }
-
-                } catch (ClassNotFoundException ex) {
-                    System.out.println("Classnotfound");
-                } catch (IOException ex) {
-                    System.out.println("ioException");
                 } catch (AlertToUser ex) {
                     alertToUserScen(ex.getMessage());
                 }
@@ -291,7 +266,6 @@ public class MasterMind extends Application {
                 }
                 gameOver = false;
                 makeBord();
-                makeDots();
 
             } else if (event.getSource() == newPlayer) {
                 userInputName();
@@ -312,12 +286,11 @@ public class MasterMind extends Application {
         BorderPane pane2 = new BorderPane();
         nameStage = new Stage();
         Scene temp = new Scene(pane2, with, hight);
-        name = new TextField();
+        name = new TextField("Name");
         name.setMaxWidth(200);
         name.setMaxHeight(10);
         Label askname = new Label("Name: ");
         okName = new Button("Ok");
-
         okName.addEventFilter(ActionEvent.ACTION, new menuChoise());
         pane2.setLeft(askname);
         pane2.setCenter(name);
@@ -335,7 +308,7 @@ public class MasterMind extends Application {
 
     }
 
-    private void uppDateCirckel(ArrayList<String> temp) {
+    public void uppdateCirckel(ArrayList<String> temp) {
 
         for (int i = 0; i < temp.size(); i++) {
 
@@ -382,34 +355,31 @@ public class MasterMind extends Application {
 
                 controller.equalColor(co);
                 ColorButtenChoise(c, row);
-                score();
-                dotStrings.addAll(controller.getDots());
-                uppdatedots(dotStrings);
 
             }
         }
     }
-    public void uppdatedots(ArrayList<String> dots){
-       
+
+    public void uppdatedots(ArrayList<String> dots) {
+
         for (int i = 0; i < dots.size(); i++) {
             System.out.println(dots.get(i));
             if (dots.get(i) == "svart") {
-                
+
                 MakeDots(Color.BLACK, dotrow);
-                
-            }
-            else if(dots.get(i).equals("vit"))
+
+            } else if (dots.get(i).equals("vit")) {
                 MakeDots(Color.WHITE, dotrow);
-            
-            
+            }
+
         }
     }
-    
-    public void MakeDots(Color c,int line){
-        System.out.println(gameOver);
+
+    public void MakeDots(Color c, int line) {
+
         if (!gameOver) {
 
-            Circle ci = new Circle(cirkelSize, c);
+            Circle ci = new Circle(10, c);
             dotsbox.add(ci, dotcolum, line);
 
             dotcolum++;
