@@ -76,7 +76,7 @@ public class MasterMind extends Application {
         controller = new MasterController(this);
         dotsbox = new GridPane();
         MenuBar menuBar = new MenuBar();
-
+        
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(30);
@@ -90,15 +90,33 @@ public class MasterMind extends Application {
         redbutton = new Button(null);
 
         redbutton.setStyle("-fx-background-radius: 5em; "
+                + "-fx-min-width: 60px; "
+                + "-fx-min-height: 60px; "
+                + "-fx-max-width: 60px; "
+                + "-fx-max-height: 60px;"
+                + "-fx-background-color: red;");
+
+        greenButton = new Button(null, green);
+        greenButton.setStyle("-fx-background-radius: 5em; "
                 + "-fx-min-width: 50px; "
                 + "-fx-min-height: 50px; "
                 + "-fx-max-width: 50px; "
                 + "-fx-max-height: 50px;"
-                + "-fx-background: RED");
-
-        greenButton = new Button(null, green);
+                + "-fx-background-color: green;");
         blueButton = new Button(null, blue);
+        blueButton.setStyle("-fx-background-radius: 5em; "
+                + "-fx-min-width: 50px; "
+                + "-fx-min-height: 50px; "
+                + "-fx-max-width: 50px; "
+                + "-fx-max-height: 50px;"
+                + "-fx-background-color: blue;");
         purpilButton = new Button(null, purpil);
+        purpilButton.setStyle("-fx-background-radius: 5em; "
+                + "-fx-min-width: 50px; "
+                + "-fx-min-height: 50px; "
+                + "-fx-max-width: 50px; "
+                + "-fx-max-height: 50px;"
+                + "-fx-background-color: purple;");
         redbutton.addEventHandler(ActionEvent.ACTION, new colorButton());
         greenButton.addEventHandler(ActionEvent.ACTION, new colorButton());
         blueButton.addEventHandler(ActionEvent.ACTION, new colorButton());
@@ -134,7 +152,8 @@ public class MasterMind extends Application {
 
         botBox = new HBox(redbutton, greenButton, blueButton, purpilButton);
         botBox.setAlignment(Pos.CENTER);
-        botBox.setSpacing(10);
+        botBox.setSpacing(20);
+        
         ////////////////////////////////////////////   
         pane.setBottom(botBox);
         pane.setCenter(grid);
@@ -156,6 +175,7 @@ public class MasterMind extends Application {
         primaryStage.setMaxWidth(800);
         primaryStage.setTitle("MasterMind");
         primaryStage.setScene(scene);
+        
         primaryStage.show();
 
     }
