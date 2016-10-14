@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import java.io.File;
@@ -20,11 +16,18 @@ import java.lang.RuntimeException;
 public class ReadAndWrite {
 
     private File MyFile;
-
+    /**
+     *
+     * constructor
+     */
     public ReadAndWrite() {
         MyFile = new File("test.txt");
     }
 
+    /**
+     *
+     * 
+     */
     public boolean writeToFile(Player players,File file) throws IOException,AlertToUser {
         System.out.println("write");
         boolean sucses = false;
@@ -62,13 +65,13 @@ public class ReadAndWrite {
      * @throws ClassNotFoundException
      */
     public Player readFromFile(File file) throws ClassNotFoundException, IOException,AlertToUser {
-        Player playres = new Player();
+        Player players = new Player();
         ObjectInputStream input = null;
         MyFile = file;
        
         try {
             input = new ObjectInputStream(new FileInputStream(MyFile));
-            playres = (Player) input.readObject();
+            players = (Player) input.readObject();
             System.out.println("Deserializing successfully");
             
         } catch (ClassNotFoundException e) {
@@ -85,7 +88,7 @@ public class ReadAndWrite {
         }
 
         
-        return playres;
+        return players;
 
     }
 }
