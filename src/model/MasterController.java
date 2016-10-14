@@ -65,19 +65,18 @@ public class MasterController {
     public void newGame() {
         System.out.println("new game");
         boolean round = true;
-        while (!hasGamePlayers()) {
-            if (round) {
-                scen.userInputName();
-            }
-            round = false;
-        }
+        scen.userInputName();
         System.out.println(hasGamePlayers());
-        if (hasGamePlayers()) {
-            System.out.println(hasGamePlayers());
-            scen.SetGame(Boolean.FALSE);
-            scen.makeBord();
-            scen.score();
-            MasterModel.colorGenerated();
+        while (round) {
+
+            if (hasGamePlayers()) {
+                System.out.println(hasGamePlayers());
+                scen.SetGame(Boolean.FALSE);
+                scen.makeBord();
+                scen.score();
+                MasterModel.colorGenerated();
+                round = false;
+            }
         }
 
     }
