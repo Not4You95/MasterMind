@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import java.io.File;
@@ -22,14 +18,22 @@ public class MasterController {
     private ArrayList<String> color;
     private MasterMindModel MasterModel;
     private MasterMind scen;
-
+    
+    /**
+     *constructor
+     */
     public MasterController(MasterMind MasterClass) {
         color = new ArrayList<String>();
         MasterModel = new MasterMindModel();
         scen = MasterClass;
 
     }
-
+    
+    /**
+     *checks if player color is equal with secret code and alerts
+     *player if win or lose
+     * @param String 
+     */
     public void equalColor(String color) {
         String[] temp = new String[4];
         this.color.add(color);
@@ -52,19 +56,31 @@ public class MasterController {
         }
 
     }
-
+    
+    /**
+     * @shows the number of wins and number of games played
+     */
     private void uppdateScore() {
         scen.score(MasterModel.getNrWins(), MasterModel.GetNrGames());
     }
 
+    /**
+     * @return Arraylist of colors
+     */
     public ArrayList<String> getColors() {
         return MasterModel.getColors();
     }
-
+    
+   /**
+     * @return Arraylist of dots
+     */
     public ArrayList<String> getDots() {
         return MasterModel.getDots();
     }
-
+    
+    /**
+     * sets new gane
+     */
     public void newGame() {
         scen.SetGame(Boolean.TRUE);
 
@@ -80,12 +96,18 @@ public class MasterController {
         }
 
     }
-
+    
+    /**
+     * @ shows a window with the rules of the game
+     */
     public void showRules() {
         scen.alertToUserScen("Its your job as the codebreaker to figure out the 4 colored secret code that the codemaster has generated. \n \n"
                 + "Each row is made up by four colors that is your guess of the secret code. If one of the color match the secret code and it is in the right place, the codemaster will mark it with a black circle on the right side of th board. If the guess has right color but in the wrong order the codemaster will mark it with a white circle. You have seven trys to figure out the secret code before your mind explodes.", "Rules", "Rules");
     }
 
+    /**
+     * @param File
+     */
     public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {
         if (file != null) {
 
@@ -101,20 +123,35 @@ public class MasterController {
 
     }
 
+    /**
+     * saves to file
+     */
     public void saveToFile() throws IOException, AlertToUser {
         MasterModel.saveToFile();
 
     }
+    
+    /**
+     * main
+     * @param args the command line arguments
+     */
 
     public static void main(String[] args) {
         launch(args);
     }
-
+    
+    /**
+     * @param String 
+     *sets new player name
+     */
     public void newPlayer(String name) {
         MasterModel.newPlayer(name);
 
     }
 
+    /**
+     * @return boolean
+     */
     public boolean hasGamePlayers() {
         return MasterModel.hasGamePlayer();
     }
