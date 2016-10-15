@@ -14,16 +14,16 @@ public class Player implements Serializable {
     private double score = 0.0;
     private int numberOfWins = 0;
     private int numberOfGames = 0;
-    private RowCirckle secretColor;
-    private ArrayList<RowCirckle> userColors;
-    private ArrayList<RowCirckle> dots;
+    private RowCircle secretColor;
+    private ArrayList<RowCircle> userColors;
+    private ArrayList<RowCircle> dots;
 /**
  *
  * constructor
  */
     public Player() {
-        userColors = new ArrayList<RowCirckle>();
-        dots  =new ArrayList<RowCirckle>();
+        userColors = new ArrayList<RowCircle>();
+        dots  =new ArrayList<RowCircle>();
     }
     
 /**
@@ -32,7 +32,7 @@ public class Player implements Serializable {
  */
     public Player(String name) {
         this.userName = name;
-        userColors = new ArrayList<RowCirckle>();
+        userColors = new ArrayList<RowCircle>();
 
     }
 /**
@@ -91,7 +91,7 @@ public class Player implements Serializable {
  *
  * sets the color, dots and secret code from a previous game
  */
-    public void lastGame(RowCirckle secret, ArrayList<RowCirckle> colors, ArrayList<RowCirckle> dots) {
+    public void lastGame(RowCircle secret, ArrayList<RowCircle> colors, ArrayList<RowCircle> dots) {
         secretColor = secret;
         this.userColors.addAll(colors);
         this.dots.addAll(dots);
@@ -102,15 +102,15 @@ public class Player implements Serializable {
      *
      * @return secret code
     */
-    public RowCirckle getSecretClass() {
+    public RowCircle getSecretClass() {
         return secretColor;
     }
 
     /**
     * @return
     */
-    public ArrayList<RowCirckle> getColors() {
-        ArrayList<RowCirckle> temp = new ArrayList<RowCirckle>();
+    public ArrayList<RowCircle> getColors() {
+        ArrayList<RowCircle> temp = new ArrayList<RowCircle>();
         temp.addAll(userColors);
         return temp;
     }
@@ -119,7 +119,7 @@ public class Player implements Serializable {
      *
      * 
      */
-    public void setDots(ArrayList<RowCirckle> newDots){
+    public void setDots(ArrayList<RowCircle> newDots){
         this.dots.addAll(newDots);
     }
     
@@ -127,8 +127,8 @@ public class Player implements Serializable {
      *
      * 
      */
-    public ArrayList<RowCirckle> getDots(){
-        ArrayList<RowCirckle> temp = new ArrayList<RowCirckle>();
+    public ArrayList<RowCircle> getDots(){
+        ArrayList<RowCircle> temp = new ArrayList<RowCircle>();
         temp.addAll(dots);
         return temp;
     }

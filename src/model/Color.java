@@ -6,7 +6,7 @@ package model;
  * @author Robert
  */
 public enum Color {
-    red,blue,green,purpil;
+    red,blue,green,purple;
     
     /**
      * @return a random enum

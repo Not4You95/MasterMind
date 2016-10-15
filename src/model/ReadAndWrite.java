@@ -1,4 +1,3 @@
-
 package model;
 
 import java.io.File;
@@ -7,8 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.lang.RuntimeException;
+
 /**
  *
  * @author jonas
@@ -16,6 +14,7 @@ import java.lang.RuntimeException;
 public class ReadAndWrite {
 
     private File MyFile;
+
     /**
      *
      * constructor
@@ -26,11 +25,11 @@ public class ReadAndWrite {
 
     /**
      *
-     * 
+     *
      */
-    public boolean writeToFile(Player players,File file) throws IOException,AlertToUser {
+    public boolean writeToFile(Player players, File file) throws IOException, AlertToUser {
         System.out.println("write");
-        boolean sucses = false;
+        boolean success = false;
         ObjectOutputStream output = null;
         MyFile = file;
 
@@ -38,9 +37,9 @@ public class ReadAndWrite {
             output = new ObjectOutputStream(new FileOutputStream(MyFile, false));
             output.writeObject(players);
             System.out.println(players.getUserName());
-            System.out.println("Serializing successfully");
-            sucses = true;
-            
+
+            success = true;
+
             output.close();
         } finally {
             try {
@@ -48,12 +47,12 @@ public class ReadAndWrite {
                     output.close();
                 }
             } catch (IOException e) {
-                throw new AlertToUser("Can not save data!");
+                throw new AlertToUser("Can't save data!");
 
             }
         }
 
-        return sucses;
+        return success;
 
     }
 
@@ -64,30 +63,27 @@ public class ReadAndWrite {
      * @return true if saved, else false
      * @throws ClassNotFoundException
      */
-    public Player readFromFile(File file) throws ClassNotFoundException, IOException,AlertToUser {
+    public Player readFromFile(File file) throws ClassNotFoundException, IOException, AlertToUser {
         Player players = new Player();
         ObjectInputStream input = null;
         MyFile = file;
-       
+
         try {
             input = new ObjectInputStream(new FileInputStream(MyFile));
             players = (Player) input.readObject();
-            System.out.println("Deserializing successfully");
-            
+
         } catch (ClassNotFoundException e) {
-           throw new AlertToUser("Can not open file!");
-        }
-        finally{
+            throw new AlertToUser("Can't open file!");
+        } finally {
             try {
                 if (input != null) {
                     input.close();
                 }
             } catch (Exception e) {
-                
+
             }
         }
 
-        
         return players;
 
     }

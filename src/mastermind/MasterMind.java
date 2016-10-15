@@ -8,8 +8,6 @@ package mastermind;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -29,7 +27,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -45,26 +42,22 @@ import model.*;
  */
 public class MasterMind extends Application {
 
-    private Circle red = new Circle(30, Color.RED);
-    private Circle green = new Circle(30, Color.LIME);
-    private Circle blue = new Circle(30, Color.BLUE);
-    private Circle purpil = new Circle(30, Color.PURPLE);
-    private Circle brown = new Circle(30, Color.BROWN);
-    private HBox botBox;
-
-    private GridPane grid, dotsbox;
+   
+    private HBox bottonBox;
+    private GridPane grid, dotsbox,animoBox;
     private MasterController controller;
     private BorderPane pane;
     private int colum = 0, row = 6, dotcolum = 0, dotrow = 6;
     private boolean gameOver = true;
-    private int cirkelSize = 20;
-    private Button redbutton, greenButton, blueButton, purpilButton, okName;
-    private MenuItem open, save, rules, newGame, newPlayer, AboutGame;
+    private int circleSize = 20;
+    private Button redbutton, greenButton, blueButton, purpleButton, okName;
+    private MenuItem open, save, rules, newGame, newPlayer, aboutGame;
     private Scene scene;
     private Stage fileStage, nameStage;
     private TextField name = null;
     private Alert alert;
-    private Timeline timeline;
+    private ArrayList<PathTransition> ptArray;
+    
 
     @Override
     public void start(Stage primaryStage) {
@@ -80,45 +73,46 @@ public class MasterMind extends Application {
         dotsbox.setHgap(10);
         dotsbox.setVgap(50);
         dotsbox.setAlignment(Pos.CENTER_RIGHT);
-
+///////////////////////IMAGE///////////////////////////////////////////////////////////////////
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream("Wood2.jpg")));
         pane.getChildren().addAll(image);
-
+   ////////////////////BUTTENS/////////////////////////////////////////////////// 
         redbutton = new Button(null);
 
         redbutton.setStyle("-fx-background-radius: 5em; "
-                + "-fx-min-width: 60px; "
-                + "-fx-min-height: 60px; "
-                + "-fx-max-width: 60px; "
-                + "-fx-max-height: 60px;"
+                + "-fx-min-width: 52px; "
+                + "-fx-min-height: 52px; "
+                + "-fx-max-width: 52px; "
+                + "-fx-max-height: 52px;"
                 + "-fx-background-color: red;");
 
-        greenButton = new Button(null, green);
+        greenButton = new Button(null);
         greenButton.setStyle("-fx-background-radius: 5em; "
                 + "-fx-min-width: 50px; "
                 + "-fx-min-height: 50px; "
                 + "-fx-max-width: 50px; "
                 + "-fx-max-height: 50px;"
                 + "-fx-background-color: green;");
-        blueButton = new Button(null, blue);
+        blueButton = new Button(null);
         blueButton.setStyle("-fx-background-radius: 5em; "
                 + "-fx-min-width: 50px; "
                 + "-fx-min-height: 50px; "
                 + "-fx-max-width: 50px; "
                 + "-fx-max-height: 50px;"
                 + "-fx-background-color: blue;");
-        purpilButton = new Button(null, purpil);
-        purpilButton.setStyle("-fx-background-radius: 5em; "
+        purpleButton = new Button(null);
+        purpleButton.setStyle("-fx-background-radius: 5em; "
                 + "-fx-min-width: 50px; "
                 + "-fx-min-height: 50px; "
                 + "-fx-max-width: 50px; "
                 + "-fx-max-height: 50px;"
                 + "-fx-background-color: purple;");
+
         redbutton.addEventHandler(ActionEvent.ACTION, new colorButton());
         greenButton.addEventHandler(ActionEvent.ACTION, new colorButton());
         blueButton.addEventHandler(ActionEvent.ACTION, new colorButton());
-        purpilButton.addEventHandler(ActionEvent.ACTION, new colorButton());
-
+        purpleButton.addEventHandler(ActionEvent.ACTION, new colorButton());
+//////////////////////////MENY////////////////////////////////////////////////////////
         Menu meny = new Menu("File");
         open = new MenuItem("Open");
         open.addEventHandler(ActionEvent.ACTION, new menuChoise());
@@ -128,39 +122,39 @@ public class MasterMind extends Application {
         newGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
         newPlayer = new MenuItem("New Player");
         newPlayer.addEventHandler(ActionEvent.ACTION, new menuChoise());
-/////////////////////////////////////////////////////////////////////////////
+////////////////////////////SECEND MENY/////////////////////////////////////////////////
         meny.getItems().addAll(newGame, open, save, newPlayer);
         Menu about = new Menu("About");
         rules = new MenuItem("Rules");
-        AboutGame = new MenuItem("About us");
-        AboutGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
+        aboutGame = new MenuItem("About us");
+        aboutGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
         rules.addEventHandler(ActionEvent.ACTION, new menuChoise());
-        about.getItems().addAll(rules, AboutGame);
+        about.getItems().addAll(rules, aboutGame);
+//////////////////////////////MEDNY DESIGN//////////////////////////////////////////////////////////        
         menuBar.setStyle("-fx-background-color: #a6b5c9,linear-gradient(#303842 0%, #3e5577 20%, #375074 100%),linear-gradient(#768aa5 0%, #849cbb 5%, #5877a2 50%, #486a9a 51%, #4a6c9b 100%);"
                 + "-fx-background-insets: 0 0 -1 0,0,1;"
                 + "-fx-background-radius: 5,5,4;"
                 + "-fx-padding: 7 30 7 30;"
                 + "-fx-text-fill: #242d35;"
                 + "-fx-font-family: Helvetica;"
-                + "-fx-font-size: 12px;"
+                + "-fx-font-size: 14px;"
                 + "-fx-text-fill: Withe;");
         menuBar.getMenus().addAll(meny, about);
         ////////////////////////////////////////
 
-        botBox = new HBox(redbutton, greenButton, blueButton, purpilButton);
-        botBox.setAlignment(Pos.CENTER);
-        botBox.setSpacing(20);
+        bottonBox = new HBox(redbutton, greenButton, blueButton, purpleButton);
+        bottonBox.setAlignment(Pos.CENTER);
+        bottonBox.setSpacing(20);
 
         ////////////////////////////////////////////   
-        pane.setBottom(botBox);
-        pane.setCenter(grid);
+       
         pane.setRight(dotsbox);
         pane.setTop(menuBar);
 
-        BorderPane.setAlignment(botBox, Pos.BOTTOM_CENTER);
+        BorderPane.setAlignment(bottonBox, Pos.BOTTOM_CENTER);
         BorderPane.setAlignment(grid, Pos.CENTER);
         BorderPane.setAlignment(dotsbox, Pos.CENTER);
-        //BorderPane.setAlignment(p1, Pos.CENTER);
+        animation();
 
         scene = new Scene(pane, 720, 800);
         primaryStage.setMaxHeight(800);
@@ -169,9 +163,14 @@ public class MasterMind extends Application {
         primaryStage.setMaxWidth(800);
         primaryStage.setTitle("MasterMind");
         primaryStage.setScene(scene);
-        // animation();
+       
         primaryStage.show();
 
+    }
+
+    public void printButtens() {
+
+        pane.setBottom(bottonBox);
     }
 
     public void alertToUserScen(String info, String head, String titel) {
@@ -186,7 +185,7 @@ public class MasterMind extends Application {
 
         if (!gameOver) {
 
-            Circle ci = new Circle(cirkelSize, c);
+            Circle ci = new Circle(circleSize, c);
             grid.add(ci, colum, row);
             colum++;
 
@@ -234,10 +233,11 @@ public class MasterMind extends Application {
     }
 
     public void makeBord() {
+         pane.setCenter(grid);
         for (int i = 0; i < 7; i++) {
 
             for (int j = 0; j < 4; j++) {
-                Circle temp = new Circle(cirkelSize, Color.AQUA);
+                Circle temp = new Circle(circleSize, Color.AQUA);
                 grid.add(temp, j, i);
                 Circle dots = new Circle(10, Color.CHOCOLATE);
                 dotsbox.add(dots, j, i);
@@ -269,10 +269,8 @@ public class MasterMind extends Application {
                     alertToUserScen(ex.getMessage(), "Error", "Error!");
                 } catch (IOException ex) {
                     alertToUserScen(ex.getMessage(), "Error", "Error!");
-                } 
-            }       
-
-             else if (event.getSource() == save) {
+                }
+            } else if (event.getSource() == save) {
                 try {
                     controller.saveToFile();
                 } catch (IOException ex) {
@@ -291,7 +289,7 @@ public class MasterMind extends Application {
                 controller.newPlayer(name.getText().toString());
                 nameStage.close();
 
-            } else if (event.getSource() == AboutGame) {
+            } else if (event.getSource() == aboutGame) {
                 animation();
 
             }
@@ -327,7 +325,7 @@ public class MasterMind extends Application {
 
     }
 
-    public void uppdateCirckel(ArrayList<String> temp) {
+    public void updateCircle(ArrayList<String> temp) {
 
         for (int i = 0; i < temp.size(); i++) {
 
@@ -338,7 +336,7 @@ public class MasterMind extends Application {
             } else if (temp.get(i).contains("green")) {
 
                 ColorButtenChoise(Color.GREEN);
-            } else if (temp.get(i).contains("purpil")) {
+            } else if (temp.get(i).contains("purple")) {
 
                 ColorButtenChoise(Color.PURPLE);
             } else if (temp.get(i).contains("blue")) {
@@ -366,9 +364,9 @@ public class MasterMind extends Application {
                 } else if (event.getSource() == greenButton) {
                     c = Color.GREEN;
                     co = "green";
-                } else if (event.getSource() == purpilButton) {
+                } else if (event.getSource() == purpleButton) {
                     c = Color.PURPLE;
-                    co = "purpil";
+                    co = "purple";
                 }
                 ColorButtenChoise(c);
                 controller.equalColor(co);
@@ -377,17 +375,17 @@ public class MasterMind extends Application {
         }
     }
 
-    public void uppdatedots(ArrayList<String> dots) {
+    public void updatedots(ArrayList<String> dots) {
 
         for (int i = 0; i < dots.size(); i++) {
             System.out.println(dots.get(i));
-            if (dots.get(i).equals("svart")) {
+            if (dots.get(i).equals("black")) {
 
                 MakeDots(Color.BLACK);
 
-            } else if (dots.get(i).equals("vit")) {
+            } else if (dots.get(i).equals("white")) {
                 MakeDots(Color.WHITE);
-            } else if (dots.get(i).equals("inget")) {
+            } else if (dots.get(i).equals("empty")) {
                 MakeDots(Color.CHOCOLATE);
             }
 
@@ -409,7 +407,7 @@ public class MasterMind extends Application {
         }
     }
 
-    public void SetGame(Boolean game) {
+    public void setGame(Boolean game) {
         gameOver = game;
         if (game) {
             row = 6;
@@ -421,45 +419,54 @@ public class MasterMind extends Application {
     }
 
     public void animation() {
+        ptArray = new ArrayList<PathTransition>();
+        animoBox = new GridPane();
+        makeAnimation(Color.RED, 0, 1);
+        makeAnimation(Color.GREEN, 0, 2);
+        makeAnimation(Color.BLUE, 0, 3);
+        makeAnimation(Color.PURPLE, 0, 4);
+        animoBox.setHgap(10);
 
-        // dotsbox.getChildren().add(blendModeGroup);
-        // circles.setEffect(new BoxBlur(10, 10, 3));
-        /* Timeline timeline = new Timeline();
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),
-        new KeyValue(winningLine.endXProperty(),endX),
-        new KeyValue(winningLine.endYProperty(),endY)));
-        winningLine= new Line(list.get(0).getX(),list.get(0).getY(),list.get(0).getX(),list.get(0).getY());*/
-        Pane paneanimation = new Pane();
+        for (int i = 0; i < ptArray.size(); i++) {
+            ptArray.get(i).play();
+        }
+        pane.setCenter(animoBox);
+        animoBox.setAlignment(Pos.CENTER);
+        BorderPane.setAlignment(animoBox, Pos.CENTER);
 
-        // Create a rectangle
-        Circle red = new Circle(10, Color.RED);
+    }
+
+    private void makeAnimation(Color c, int arow, int acolum) {
+        Circle colorCirckel = new Circle(30, c);
 
         // Create a circle
         Circle circle = new Circle(125, 100, 50);
-        circle.setFill(null);
+
+        circle.setFill(Color.WHITE);
         circle.setStrokeWidth(0);
         circle.setStroke(Color.BLACK);
+        Line line = new Line(0, -250, 0, 250);
 
         // Add circle and rectangle to the pane
-        paneanimation.getChildren().add(circle);
-        paneanimation.getChildren().addAll(red);
-
+        /* pane.getChildren().add(circle);
+        pane.getChildren().addAll(red);*/
+        animoBox.add(colorCirckel, acolum, arow);
         // Create a path transition
         PathTransition pt = new PathTransition();
         pt.setDuration(Duration.millis(4000));
-        pt.setPath(circle);
-        pt.setNode(red);
+        pt.setPath(line);
+        pt.setNode(colorCirckel);
         pt.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         pt.setCycleCount(Timeline.INDEFINITE);
         pt.setAutoReverse(true);
-        pt.play();
-        pane.setCenter(paneanimation);
-        BorderPane.setAlignment(paneanimation, Pos.CENTER);
+        ptArray.add(pt);
 
     }
 
     public void stopAnimation() {
-        timeline.stop();
-
+        for (int i = 0; i < ptArray.size(); i++) {
+            ptArray.get(i).stop();
+        }
+        
     }
 }

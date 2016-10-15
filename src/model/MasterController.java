@@ -1,4 +1,3 @@
-
 package model;
 
 import java.io.File;
@@ -18,9 +17,9 @@ public class MasterController {
     private ArrayList<String> color;
     private MasterMindModel MasterModel;
     private MasterMind scen;
-    
+
     /**
-     *constructor
+     * constructor
      */
     public MasterController(MasterMind MasterClass) {
         color = new ArrayList<String>();
@@ -28,11 +27,12 @@ public class MasterController {
         scen = MasterClass;
 
     }
-    
+
     /**
-     *checks if player color is equal with secret code and alerts
-     *player if win or lose
-     * @param String 
+     * checks if player color is equal with secret code and alerts player if win
+     * or lose
+     *
+     * @param String
      */
     public void equalColor(String color) {
         String[] temp = new String[4];
@@ -41,27 +41,27 @@ public class MasterController {
             MasterModel.addColors(this.color);
             temp = MasterModel.guessOfColors();
             this.color.clear();
-            scen.uppdatedots(getDots());
+            scen.updatedots(getDots());
         }
-        if (temp[0] == "vinst") {
-            scen.alertToUserScen("Congratilazen you are a code braker!", "Winner", "Winner!");
-            uppdateScore();
-            scen.SetGame(Boolean.TRUE);
+        if (temp[0] == "winner") {
+            scen.alertToUserScen("Congratilazen you are a code breaker!", "Winner", "Winner!");
+            updateScore();
+            scen.setGame(Boolean.TRUE);
 
-        } else if (temp[0] == "los") {
-            scen.alertToUserScen("You lost, what a losser!", "Warning: Losser alert", "Loser");
-            uppdateScore();
-            scen.SetGame(Boolean.TRUE);
+        } else if (temp[0] == "lost") {
+            scen.alertToUserScen("You lost, what a loser!", "Warning: Loser alert", "Loser");
+            updateScore();
+            scen.setGame(Boolean.TRUE);
 
         }
 
     }
-    
+
     /**
      * @shows the number of wins and number of games played
      */
-    private void uppdateScore() {
-        scen.score(MasterModel.getNrWins(), MasterModel.GetNrGames());
+    private void updateScore() {
+        scen.score(MasterModel.getNrWins(), MasterModel.getNrGames());
     }
 
     /**
@@ -70,25 +70,26 @@ public class MasterController {
     public ArrayList<String> getColors() {
         return MasterModel.getColors();
     }
-    
-   /**
+
+    /**
      * @return Arraylist of dots
      */
     public ArrayList<String> getDots() {
         return MasterModel.getDots();
     }
-    
+
     /**
      * sets new gane
      */
     public void newGame() {
-        scen.SetGame(Boolean.TRUE);
+        scen.setGame(Boolean.TRUE);
 
         if (MasterModel.hasGamePlayer()) {
-
-            scen.SetGame(Boolean.FALSE);
+            scen.stopAnimation();
+            scen.printButtens();
+            scen.setGame(Boolean.FALSE);
             scen.makeBord();
-            uppdateScore();
+            updateScore();
             MasterModel.colorGenerated();
 
         } else {
@@ -96,13 +97,15 @@ public class MasterController {
         }
 
     }
-    
+
     /**
      * @ shows a window with the rules of the game
      */
     public void showRules() {
         scen.alertToUserScen("Its your job as the codebreaker to figure out the 4 colored secret code that the codemaster has generated. \n \n"
-                + "Each row is made up by four colors that is your guess of the secret code. If one of the color match the secret code and it is in the right place, the codemaster will mark it with a black circle on the right side of th board. If the guess has right color but in the wrong order the codemaster will mark it with a white circle. You have seven trys to figure out the secret code before your mind explodes.", "Rules", "Rules");
+                + "Each row is made up by four colors that is your guess of the secret code.+"
+                + " If one of the color match the secret code and it is in the right place, the codemaster will mark it with a black circle on the right side of th board. "
+                + "If the guess has right color but in the wrong order the codemaster will mark it with a white circle. You have seven trys to figure out the secret code before your mind explodes.", "Rules", "Rules");
     }
 
     /**
@@ -110,15 +113,16 @@ public class MasterController {
      */
     public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {
         if (file != null) {
-
+            scen.stopAnimation();
+            scen.printButtens();
             System.out.println(file.toString());
-            MasterModel.ReadFromFile(file);
+            MasterModel.readFromFile(file);
             scen.makeBord();
-            uppdateScore();
-            scen.uppdateCirckel(getColors());
+            updateScore();
+            scen.updateCircle(getColors());
             System.out.println("Dots: " + getDots().toString());
-            scen.uppdatedots(getDots());
-            scen.SetGame(Boolean.FALSE);
+            scen.updatedots(getDots());
+            scen.setGame(Boolean.FALSE);
         }
 
     }
@@ -130,19 +134,18 @@ public class MasterController {
         MasterModel.saveToFile();
 
     }
-    
+
     /**
      * main
+     *
      * @param args the command line arguments
      */
-
     public static void main(String[] args) {
         launch(args);
     }
-    
+
     /**
-     * @param String 
-     *sets new player name
+     * @param String sets new player name
      */
     public void newPlayer(String name) {
         MasterModel.newPlayer(name);

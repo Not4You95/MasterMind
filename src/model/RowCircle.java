@@ -8,7 +8,7 @@ import java.util.ArrayList;
  *
  * @author jonas
  */
-public class RowCirckle implements Serializable{
+public class RowCircle implements Serializable{
 
    
     private ArrayList<String> color;
@@ -18,14 +18,14 @@ public class RowCirckle implements Serializable{
     *
     * constructor
     */
-    public RowCirckle() {
+    public RowCircle() {
         color = new ArrayList<String>();
     }
    
     /**
      * @param color the color to set
      */
-    public RowCirckle(String color1,String color2,String color3,String color4) {
+    public RowCircle(String color1,String color2,String color3,String color4) {
        
         color = new ArrayList();
         color.add(color1);
@@ -55,7 +55,7 @@ public class RowCirckle implements Serializable{
     *
     * @return tthe color of an index
     */
-    public String getRowCircel(int index){
+    public String getRowCircle(int index){
         return color.get(index).toString();
     }
  
