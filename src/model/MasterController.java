@@ -41,12 +41,11 @@ public class MasterController {
             System.out.println("controler: "+this.color.toString());
             MasterModel.addColors(this.color);
             temp.addAll(MasterModel.guessOfColors());
-            System.out.println(temp.size());
+            System.out.println("Contoler size: "+temp.size());
             this.color.clear();
-            scen.updatedots(temp);
+            scen.updatedots(temp);       
         
-        
-            
+            System.out.println("Controler dots: "+temp.toString());
              if (temp.get(0).equals("winner")) {
             scen.alertToUserScen("Congratilazen you are a code breaker!", "Winner", "Winner!");
             updateScore();

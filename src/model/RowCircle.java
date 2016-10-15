@@ -58,6 +58,12 @@ public class RowCircle implements Serializable{
     public String getRowCircle(int index){
         return color.get(index).toString();
     }
+    
+    public ArrayList<String> getArrayList(){
+        ArrayList<String> temp = new ArrayList<String>();
+        temp.addAll(color);
+        return temp;
+    }
  
 }
   

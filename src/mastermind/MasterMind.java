@@ -390,6 +390,7 @@ public class MasterMind extends Application {
             }
 
         }
+      
     }
 
     public void MakeDots(Color c) {

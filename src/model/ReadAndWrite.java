@@ -27,7 +27,7 @@ public class ReadAndWrite {
      *
      *
      */
-    public boolean writeToFile(Player players, File file) throws IOException, AlertToUser {
+    public void writeToFile(Player players, File file) throws IOException, AlertToUser {
         System.out.println("write");
         boolean success = false;
         ObjectOutputStream output = null;
@@ -37,8 +37,6 @@ public class ReadAndWrite {
             output = new ObjectOutputStream(new FileOutputStream(MyFile, false));
             output.writeObject(players);
             System.out.println(players.getUserName());
-
-            success = true;
 
             output.close();
         } finally {
@@ -51,8 +49,6 @@ public class ReadAndWrite {
 
             }
         }
-
-        return success;
 
     }
 

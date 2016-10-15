@@ -1,14 +1,8 @@
 package model;
 
-import com.sun.scenario.effect.impl.Renderer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import model.Color;
-import model.Player;
-import model.ReadAndWrite;
-import model.RowCircle;
-import java.lang.RuntimeException;
 
 /**
  *
@@ -18,7 +12,7 @@ public class MasterMindModel {
 
     private ArrayList<RowCircle> Colors;
     private ArrayList<RowCircle> dots;
-    private int row = 0, losNr = 7,lastNewGameNr=0;
+    private int row = 0, losNr = 7, lastNewGameNr = 0;
     private RowCircle secretColors;
     private Player players = null;
     private ReadAndWrite file;
@@ -41,9 +35,9 @@ public class MasterMindModel {
      */
     public void addColors(ArrayList temp) {
         RowCircle circleRow = new RowCircle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
-        Colors.add(circleRow);  
+        Colors.add(circleRow);
         players.setGameover(false);
-        System.out.println("User: " + Colors.get(row).toString());
+        System.out.println("User: " + Colors.get(Colors.size()-1).toString());
         row++;
     }
 
@@ -54,16 +48,16 @@ public class MasterMindModel {
         ArrayList<String> dotsString = new ArrayList<String>();
         int black = 0;
         System.out.println(secretColors.toString());
-        for (int i = row - 1; i < row; i++) {
+        
 
             for (int j = 0; j < 4; j++) {
 
-                if (Colors.get(i).getRowCircle(j).equals(secretColors.getRowCircle(j))) {
+                if (Colors.get(row).getRowCircle(j).equals(secretColors.getRowCircle(j))) {
 
                     dotsString.add("black");
                     black++;
 
-                } else if (secretColors.toString().contains(Colors.get(i).getRowCircle(j))) {
+                } else if (secretColors.toString().contains(Colors.get(row).getRowCircle(j))) {
 
                     dotsString.add("white");
 
@@ -71,9 +65,10 @@ public class MasterMindModel {
                     dotsString.add("empty");
                 }
 
-            }
+            
             RowCircle newdots = new RowCircle(dotsString.get(0), dotsString.get(1), dotsString.get(2), dotsString.get(3));
             dots.add(newdots);
+
         }
         System.out.println("--------------------------------------");
 
@@ -83,8 +78,9 @@ public class MasterMindModel {
             dotsString.add(0, "winner");
             players.setNumberOfGames();
             players.setNumberOfWins();
+            players.setGameover(true);
+            lastNewGameNr = row;
             losNr = row + 7;
-            
 
             return dotsString;
 
@@ -92,13 +88,14 @@ public class MasterMindModel {
 
             dotsString.add(0, "lost");
             players.setNumberOfGames();
+            players.setGameover(true);
             losNr = row + 7;
+            lastNewGameNr = row;
             System.out.println(players.getNumberOfGames());
-           
 
             return dotsString;
         }
-
+        System.out.println("model dots: "+dotsString.toString());
         return dotsString;
     }
 
@@ -140,13 +137,20 @@ public class MasterMindModel {
      * saves the secret code, player guess, player name and dots to file
      */
     public void saveToFile() throws IOException, AlertToUser {
-        ArrayList<RowCircle> tempColors,tempDots = new ArrayList<RowCircle>();
+        ArrayList<RowCircle> tempColors = new ArrayList<RowCircle>();
+        ArrayList<RowCircle> tempDots = new ArrayList<RowCircle>();
         if (players.getUserName() == null) {
             throw new AlertToUser("You need to create a player!");
         }
-        players.lastGame(secretColors, Colors, dots);
-        boolean temp2 = file.writeToFile(players, filename);
-        System.out.println(temp2);
+        System.out.println("nr: " + Colors.size());
+        for (int i = lastNewGameNr; i < Colors.size(); i++) {
+
+            tempColors.add(Colors.get(i));
+            tempDots.add(dots.get(i));
+
+        }
+        players.lastGame(secretColors, tempColors, tempDots);
+        file.writeToFile(players, filename);
 
     }
 
@@ -190,15 +194,16 @@ public class MasterMindModel {
         secretColors = players.getSecretClass();
         Colors.addAll(players.getColors());
         dots.addAll(players.getDots());
+        row = Colors.size()-1;
+        losNr = 6;
         
-      /*  row = players.getLastGameNr();
-        losNr = row;
-        if (row == dots.size()) {
+        if (players.isGameover()) {
             colorGenerated();
-            players.setGameover(false);            
-        }*/
-        
+            players.setGameover(false);
 
+        } else {
+            //losNr = ();
+        }
     }
 
     /**
@@ -216,7 +221,7 @@ public class MasterMindModel {
      */
     public ArrayList<String> getColors() {
         ArrayList<String> temp = new ArrayList<String>();
-       
+
         for (int i = row; i < Colors.size(); i++) {
             for (int j = 0; j < 4; j++) {
                 temp.add(Colors.get(i).getRowCircle(j));
@@ -239,10 +244,11 @@ public class MasterMindModel {
                 temp.add(dots.get(i).getRowCircle(j));
             }
         }
-        
+
         return temp;
     }
-    public boolean gameover(){
+
+    public boolean gameover() {
         return players.isGameover();
     }
 
