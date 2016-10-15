@@ -14,7 +14,7 @@ public class Player implements Serializable {
     private double score = 0.0;
     private int numberOfWins = 0;
     private int numberOfGames = 0;
-    private int lastGameNr = 0;
+    
     private boolean gameover = false;
     private RowCircle secretColor;
     private ArrayList<RowCircle> userColors;
@@ -138,20 +138,7 @@ public class Player implements Serializable {
     /**
      * @return the lastGameNr
      */
-    public int getLastGameNr() {
-        return lastGameNr;
-    }
-
-    /**
-     * @param lastGameNr the lastGameNr to set
-     */
-    public void setLastGameNr(int lastGameNr) {
-        this.lastGameNr = lastGameNr;
-    }
-    
-    public void increaseGameNr(){
-        lastGameNr++;
-    }
+   
 
     /**
      * @return the gameover

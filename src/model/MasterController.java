@@ -5,8 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import static javafx.application.Application.launch;
 import mastermind.MasterMind;
-import java.lang.RuntimeException;
-import javafx.scene.paint.Color;
+
 
 /**
  *
@@ -90,9 +89,10 @@ public class MasterController {
         scen.setGame(Boolean.TRUE);
 
         if (MasterModel.hasGamePlayer()) {
+            MasterModel.setGameover(Boolean.FALSE);
             scen.stopAnimation();
             scen.printButtens();
-            scen.setGame(Boolean.FALSE);
+            scen.setGame(MasterModel.gameover());
             scen.makeBord();
             updateScore();
             MasterModel.colorGenerated();
@@ -155,6 +155,7 @@ public class MasterController {
      */
     public void newPlayer(String name) {
         MasterModel.newPlayer(name);
+        MasterModel.clear();
 
     }
 

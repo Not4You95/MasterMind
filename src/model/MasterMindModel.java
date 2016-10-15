@@ -12,7 +12,7 @@ public class MasterMindModel {
 
     private ArrayList<RowCircle> Colors;
     private ArrayList<RowCircle> dots;
-    private int row = 0, losNr = 7, lastNewGameNr = 0;
+    private int row = 0, losNr = 7;
     private RowCircle secretColors;
     private Player players = null;
     private ReadAndWrite file;
@@ -36,9 +36,6 @@ public class MasterMindModel {
     public void addColors(ArrayList temp) {
         RowCircle circleRow = new RowCircle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
         Colors.add(circleRow);
-        players.setGameover(false);
-        System.out.println("User: " + Colors.get(Colors.size()-1).toString());
-        row++;
     }
 
     /**
@@ -48,39 +45,38 @@ public class MasterMindModel {
         ArrayList<String> dotsString = new ArrayList<String>();
         int black = 0;
         System.out.println(secretColors.toString());
-        
+        System.out.println("guess line: " + Colors.get(row).toString());
+        System.out.println("guess nr row: " + row + " nr color: " + Colors.size());
+        for (int j = 0; j < 4; j++) {
 
-            for (int j = 0; j < 4; j++) {
+            if (Colors.get(row).getRowCircle(j).equals(secretColors.getRowCircle(j))) {
 
-                if (Colors.get(row).getRowCircle(j).equals(secretColors.getRowCircle(j))) {
+                dotsString.add("black");
+                black++;
 
-                    dotsString.add("black");
-                    black++;
+            } else if (secretColors.toString().contains(Colors.get(row).getRowCircle(j))) {
 
-                } else if (secretColors.toString().contains(Colors.get(row).getRowCircle(j))) {
+                dotsString.add("white");
 
-                    dotsString.add("white");
-
-                } else {
-                    dotsString.add("empty");
-                }
-
-            
-            RowCircle newdots = new RowCircle(dotsString.get(0), dotsString.get(1), dotsString.get(2), dotsString.get(3));
-            dots.add(newdots);
+            } else {
+                dotsString.add("empty");
+            }
 
         }
+        RowCircle newdots = new RowCircle(dotsString.get(0), dotsString.get(1), dotsString.get(2), dotsString.get(3));
+        dots.add(newdots);
+        row++;
+
         System.out.println("--------------------------------------");
 
-        System.out.println(dots.get(row - 1).toString());
         if (black == 4) {
 
             dotsString.add(0, "winner");
             players.setNumberOfGames();
             players.setNumberOfWins();
             players.setGameover(true);
-            lastNewGameNr = row;
-            losNr = row + 7;
+            dots.clear();
+            Colors.clear();
 
             return dotsString;
 
@@ -89,13 +85,12 @@ public class MasterMindModel {
             dotsString.add(0, "lost");
             players.setNumberOfGames();
             players.setGameover(true);
-            losNr = row + 7;
-            lastNewGameNr = row;
-            System.out.println(players.getNumberOfGames());
+            dots.clear();
+            Colors.clear();
 
             return dotsString;
         }
-        System.out.println("model dots: "+dotsString.toString());
+        System.out.println("model dots: " + dotsString.toString());
         return dotsString;
     }
 
@@ -137,20 +132,16 @@ public class MasterMindModel {
      * saves the secret code, player guess, player name and dots to file
      */
     public void saveToFile() throws IOException, AlertToUser {
-        ArrayList<RowCircle> tempColors = new ArrayList<RowCircle>();
-        ArrayList<RowCircle> tempDots = new ArrayList<RowCircle>();
-        if (players.getUserName() == null) {
+       
+        if (players.getUserName() != null) {
+            
+            
+            System.out.println("Den sparade datan: "+Colors.toString());
+            players.lastGame(secretColors, Colors, dots);
+            file.writeToFile(players, filename);
+        } else {
             throw new AlertToUser("You need to create a player!");
         }
-        System.out.println("nr: " + Colors.size());
-        for (int i = lastNewGameNr; i < Colors.size(); i++) {
-
-            tempColors.add(Colors.get(i));
-            tempDots.add(dots.get(i));
-
-        }
-        players.lastGame(secretColors, tempColors, tempDots);
-        file.writeToFile(players, filename);
 
     }
 
@@ -190,20 +181,31 @@ public class MasterMindModel {
     public void readFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
         filename = open;
         players = file.readFromFile(open);
-        ArrayList<String> temp = new ArrayList<>();
-        secretColors = players.getSecretClass();
-        Colors.addAll(players.getColors());
-        dots.addAll(players.getDots());
-        row = Colors.size()-1;
-        losNr = 6;
-        
-        if (players.isGameover()) {
+         secretColors = players.getSecretClass();
+            Colors.addAll(players.getColors());
+            dots.addAll(players.getDots());
+            System.out.println("Läst data: "+Colors.toString());
+            
+            row = Colors.size();
+
+       /* if (players.isGameover()) {
+            System.out.println("new game!!!!!!!!!!!!!!!!!!");
             colorGenerated();
+            row = 0;
             players.setGameover(false);
+            System.out.println("guess nr row: " + row + " nr color: " + Colors.size());
 
         } else {
-            //losNr = ();
-        }
+            System.out.println("lkhkjnlkmlkmlk-");
+            secretColors = players.getSecretClass();
+            Colors.addAll(players.getColors());
+            dots.addAll(players.getDots());
+            System.out.println("Läst data: "+Colors.toString());
+            
+            row = Colors.size();
+
+        }*/
+
     }
 
     /**
@@ -221,8 +223,13 @@ public class MasterMindModel {
      */
     public ArrayList<String> getColors() {
         ArrayList<String> temp = new ArrayList<String>();
-
-        for (int i = row; i < Colors.size(); i++) {
+        int nr;
+        if (row == 0) {
+            nr = 1;
+        } else {
+            nr = 1;
+        }
+        for (int i = nr - 1; i < Colors.size(); i++) {
             for (int j = 0; j < 4; j++) {
                 temp.add(Colors.get(i).getRowCircle(j));
 
@@ -236,10 +243,15 @@ public class MasterMindModel {
      */
     public ArrayList<String> getDots() {
         ArrayList<String> temp = new ArrayList<String>();
-        int nr = players.getLastGameNr();
 
-        System.out.println("row: " + row + "nr: " + nr);
-        for (int i = row; i < dots.size(); i++) {
+        int nr;
+        if (row == 0) {
+            nr = 1;
+        } else {
+            nr = 1;
+        }
+
+        for (int i = nr - 1; i < dots.size(); i++) {
             for (int j = 0; j < 4; j++) {
                 temp.add(dots.get(i).getRowCircle(j));
             }
@@ -250,6 +262,16 @@ public class MasterMindModel {
 
     public boolean gameover() {
         return players.isGameover();
+    }
+
+    public void setGameover(Boolean game) {
+        System.out.println("GameOver: " + game);
+        players.setGameover(game);
+    }
+    
+    public void clear(){
+        Colors.clear();
+        dots.clear();
     }
 
 }
