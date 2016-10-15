@@ -35,24 +35,30 @@ public class MasterController {
      * @param String
      */
     public void equalColor(String color) {
-        String[] temp = new String[4];
+        ArrayList<String> temp = new ArrayList<String>();
         this.color.add(color);
         if (this.color.size() == 4) {
+            System.out.println("controler: "+this.color.toString());
             MasterModel.addColors(this.color);
-            temp = MasterModel.guessOfColors();
+            temp.addAll(MasterModel.guessOfColors());
+            System.out.println(temp.size());
             this.color.clear();
-            scen.updatedots(getDots());
-        }
-        if (temp[0] == "winner") {
+            scen.updatedots(temp);
+        
+        
+            
+             if (temp.get(0).equals("winner")) {
             scen.alertToUserScen("Congratilazen you are a code breaker!", "Winner", "Winner!");
             updateScore();
-            scen.setGame(Boolean.TRUE);
+            scen.setGame(MasterModel.gameover());
 
-        } else if (temp[0] == "lost") {
+        } else if (temp.get(0).equals("lost")) {
             scen.alertToUserScen("You lost, what a loser!", "Warning: Loser alert", "Loser");
             updateScore();
-            scen.setGame(Boolean.TRUE);
+            scen.setGame(MasterModel.gameover());
 
+        
+        }  
         }
 
     }
@@ -117,12 +123,13 @@ public class MasterController {
             scen.printButtens();
             System.out.println(file.toString());
             MasterModel.readFromFile(file);
+            scen.setGame(MasterModel.gameover());
             scen.makeBord();
             updateScore();
             scen.updateCircle(getColors());
             System.out.println("Dots: " + getDots().toString());
             scen.updatedots(getDots());
-            scen.setGame(Boolean.FALSE);
+            
         }
 
     }

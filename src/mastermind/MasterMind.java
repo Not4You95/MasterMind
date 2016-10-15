@@ -80,10 +80,10 @@ public class MasterMind extends Application {
         redbutton = new Button(null);
 
         redbutton.setStyle("-fx-background-radius: 5em; "
-                + "-fx-min-width: 52px; "
-                + "-fx-min-height: 52px; "
-                + "-fx-max-width: 52px; "
-                + "-fx-max-height: 52px;"
+                + "-fx-min-width: 50px; "
+                + "-fx-min-height: 50px; "
+                + "-fx-max-width: 50px; "
+                + "-fx-max-height: 50px;"
                 + "-fx-background-color: red;");
 
         greenButton = new Button(null);
