@@ -79,7 +79,7 @@ public class MasterMindModel {
         System.out.println(dots.get(row - 1).toString());
         if (black == 4) {
             String[] vinst = new String[1];
-            vinst[0] = "vinst";
+            vinst[0] = "winner";
             players.setNumberOfGames();
             players.setNumberOfWins();
             losNr=row+7;
@@ -88,7 +88,7 @@ public class MasterMindModel {
 
         } else if ((row) == losNr) {
             String[] lost = new String[1];
-            lost[0] = "los";
+            lost[0] = "lost";
             players.setNumberOfGames();
             losNr=row+7;
             System.out.println(players.getNumberOfGames());
