@@ -7,54 +7,36 @@ package mastermind;
 
 import java.io.File;
 import java.io.IOException;
-import static java.lang.Math.random;
-
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
+import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.effect.BlendMode;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.StrokeType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jdk.nashorn.internal.parser.TokenType;
+
 import model.*;
 
 /**
@@ -287,9 +269,10 @@ public class MasterMind extends Application {
                     alertToUserScen(ex.getMessage(), "Error", "Error!");
                 } catch (IOException ex) {
                     alertToUserScen(ex.getMessage(), "Error", "Error!");
-                }
+                } 
+            }       
 
-            } else if (event.getSource() == save) {
+             else if (event.getSource() == save) {
                 try {
                     controller.saveToFile();
                 } catch (IOException ex) {
@@ -309,6 +292,7 @@ public class MasterMind extends Application {
                 nameStage.close();
 
             } else if (event.getSource() == AboutGame) {
+                animation();
 
             }
 
@@ -437,36 +421,40 @@ public class MasterMind extends Application {
     }
 
     public void animation() {
-        GridPane root3 = new GridPane();
-        GridPane circles = new GridPane();
-        for (int i = 0; i < 1; i++) {
-            Circle circle = new Circle(10, Color.BLACK);
-            circle.setStrokeType(StrokeType.OUTSIDE);
-            circle.setStroke(Color.web("white", 0.16));
-            circle.setStrokeWidth(4);
-            circles.getChildren().add(circle);
-        }
 
-        Group blendModeGroup = new Group(new Group(circles));
-        // colors.setBlendMode(BlendMode.OVERLAY);
-        root3.getChildren().add(blendModeGroup);
-        pane.setRight(root3);
         // dotsbox.getChildren().add(blendModeGroup);
         // circles.setEffect(new BoxBlur(10, 10, 3));
-        timeline = new Timeline();
-        for (Node circle : circles.getChildren()) {
-            timeline.getKeyFrames().addAll(
-                    new KeyFrame(Duration.ONE, // set start position at 0
+        /* Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2),
+        new KeyValue(winningLine.endXProperty(),endX),
+        new KeyValue(winningLine.endYProperty(),endY)));
+        winningLine= new Line(list.get(0).getX(),list.get(0).getY(),list.get(0).getX(),list.get(0).getY());*/
+        Pane paneanimation = new Pane();
 
-                            new KeyValue(circle.translateXProperty(), 0),
-                            new KeyValue(circle.translateYProperty(), 0)),
-                    new KeyFrame(new Duration(1000), // set end position at 40s
-                            new KeyValue(circle.translateXProperty(), random() * 600),
-                            new KeyValue(circle.translateYProperty(), random() * 800))
-            );
-        }
-        // play 40s of animation
-        timeline.play();
+        // Create a rectangle
+        Circle red = new Circle(10, Color.RED);
+
+        // Create a circle
+        Circle circle = new Circle(125, 100, 50);
+        circle.setFill(null);
+        circle.setStrokeWidth(0);
+        circle.setStroke(Color.BLACK);
+
+        // Add circle and rectangle to the pane
+        paneanimation.getChildren().add(circle);
+        paneanimation.getChildren().addAll(red);
+
+        // Create a path transition
+        PathTransition pt = new PathTransition();
+        pt.setDuration(Duration.millis(4000));
+        pt.setPath(circle);
+        pt.setNode(red);
+        pt.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        pt.setCycleCount(Timeline.INDEFINITE);
+        pt.setAutoReverse(true);
+        pt.play();
+        pane.setCenter(paneanimation);
+        BorderPane.setAlignment(paneanimation, Pos.CENTER);
 
     }
 
