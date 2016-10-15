@@ -17,9 +17,6 @@ import java.lang.RuntimeException;
  */
 public class MasterMindModel {
 
-    /**
-     * @param args the command line arguments
-     */
     private ArrayList<RowCirckle> Colors;
     private ArrayList<RowCirckle> dots;
     private int row = 0,losNr=7;
@@ -43,6 +40,7 @@ public class MasterMindModel {
     
    /**
      * adding color to the rows and increment row
+     *@param Arraylist
      */
     public void addColors(ArrayList temp) {
         RowCirckle cirkelRow = new RowCirckle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
@@ -52,7 +50,7 @@ public class MasterMindModel {
     }
     
     /**
-     * compares the choosen colors and marks the dots with right color
+     * compares the choosen colors and marks the dots with the right color
      */
     public String[] guessOfColors() {
         String[] dotsString = new String[4];
@@ -122,6 +120,7 @@ public class MasterMindModel {
 
      /**
      * sets the name of the player and increments number of players
+     *@param String
      */
     public void newPlayer(String name) {
 
@@ -155,25 +154,39 @@ public class MasterMindModel {
     }
 
     /**
-     * @return 
+     * @return number of wins
      */
     public String getNrWins() {
         // return Integer.toString(Players.getNumberOfWins());
         return "" + Players.getNumberOfWins();
     }
 
+    /**
+     * @return number of games
+     */
     public String GetNrGames() {
         //return Integer.toString(Players.getNumberOfGames());
         return "" + Players.getNumberOfGames();
     }
     
+    /**
+     * set number of wins
+     */
     public void setNrWins(){
         Players.setNumberOfWins();
     }
+    
+    /**
+     * @param args the command line arguments
+     */
     public void setNrGames(){
         Players.setNumberOfGames();
     }
-
+    
+    /**
+     * @param File
+     *reads from file and sets the color back from saved game
+     */
     public void ReadFromFile(File open) throws ClassNotFoundException, IOException, AlertToUser {
         filename = open;
         Players = file.readFromFile(open);
@@ -186,13 +199,19 @@ public class MasterMindModel {
 
     }
 
+      /**
+     * @return boolean
+     */
     public boolean hasGamePlayer() {
         if (Players.getUserName() == null) {
             return false;
         }
         return true;
     }
-
+    
+    /**
+     * @return Arraylist of colors
+     */
     public ArrayList<String> getColors() {
         ArrayList<String> temp = new ArrayList<String>();
         for (int i = 0; i < Colors.size(); i++) {
@@ -204,6 +223,9 @@ public class MasterMindModel {
         return temp;
     }
 
+    /**
+     * @return Arraylist of color dots
+     */
     public ArrayList<String> getDots() {
         ArrayList<String> temp = new ArrayList<String>();
         int nr = 1;
