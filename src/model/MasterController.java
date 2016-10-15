@@ -41,16 +41,20 @@ public class MasterController {
         }
         if (temp[0] == "vinst") {
             scen.alertToUserScen("Congratilazen you are a code braker!", "Winner", "Winner!");
-            scen.score();
+            uppdateScore();
             scen.SetGame(Boolean.TRUE);
 
         } else if (temp[0] == "los") {
             scen.alertToUserScen("You lost, what a losser!", "Warning: Losser alert", "Loser");
-            scen.score();
+            uppdateScore();
             scen.SetGame(Boolean.TRUE);
 
         }
 
+    }
+
+    private void uppdateScore() {
+        scen.score(MasterModel.getNrWins(), MasterModel.GetNrGames());
     }
 
     public ArrayList<String> getColors() {
@@ -63,12 +67,12 @@ public class MasterController {
 
     public void newGame() {
         scen.SetGame(Boolean.TRUE);
-        
+
         if (MasterModel.hasGamePlayer()) {
 
             scen.SetGame(Boolean.FALSE);
             scen.makeBord();
-            scen.score();
+            uppdateScore();
             MasterModel.colorGenerated();
 
         } else {
@@ -84,10 +88,11 @@ public class MasterController {
 
     public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {
         if (file != null) {
+
             System.out.println(file.toString());
             MasterModel.ReadFromFile(file);
             scen.makeBord();
-            scen.score();
+            uppdateScore();
             scen.uppdateCirckel(getColors());
             System.out.println("Dots: " + getDots().toString());
             scen.uppdatedots(getDots());
@@ -107,16 +112,6 @@ public class MasterController {
 
     public void newPlayer(String name) {
         MasterModel.newPlayer(name);
-
-    }
-
-    public String getNrWins() {
-        return MasterModel.getNrWins();
-
-    }
-
-    public String getNrGames() {
-        return MasterModel.GetNrGames();
 
     }
 

@@ -82,6 +82,7 @@ public class MasterMind extends Application {
     private Stage fileStage, nameStage;
     private TextField name = null;
     private Alert alert;
+    private Timeline timeline;
 
     @Override
     public void start(Stage primaryStage) {
@@ -186,7 +187,7 @@ public class MasterMind extends Application {
         primaryStage.setMaxWidth(800);
         primaryStage.setTitle("MasterMind");
         primaryStage.setScene(scene);
-        animation();
+        // animation();
         primaryStage.show();
 
     }
@@ -217,7 +218,7 @@ public class MasterMind extends Application {
         // System.out.println("colum: " + colum + "\n row: " + row);
     }
 
-    public void score() {
+    public void score(String winsNumer, String gamesnumer) {
         Label winsNr, gamesNr, wins, games;
         GridPane scorePane = new GridPane();
         wins = new Label("Wins");
@@ -234,9 +235,9 @@ public class MasterMind extends Application {
         line.setStroke(Color.WHITE);
         line.setStrokeWidth(3);
         ///////////////////////////////
-        winsNr = new Label(controller.getNrWins());
+        winsNr = new Label(winsNumer);
         winsNr.setTextFill(Color.WHITE);
-        gamesNr = new Label(controller.getNrGames());
+        gamesNr = new Label(gamesnumer);
         gamesNr.setTextFill(Color.WHITE);
         ///////////////////////////////
         scorePane.setVgap(10);
@@ -301,7 +302,6 @@ public class MasterMind extends Application {
                 controller.showRules();
             } else if (event.getSource() == newGame) {
                 controller.newGame();
-
             } else if (event.getSource() == newPlayer) {
                 userInputName();
             } else if (event.getSource() == okName) {
@@ -386,9 +386,8 @@ public class MasterMind extends Application {
                     c = Color.PURPLE;
                     co = "purpil";
                 }
-
-                controller.equalColor(co);
                 ColorButtenChoise(c);
+                controller.equalColor(co);
 
             }
         }
@@ -438,37 +437,41 @@ public class MasterMind extends Application {
     }
 
     public void animation() {
-        Group root = new Group();
-        Group circles = new Group();
-        for (int i = 0; i < 5; i++) {
-            Circle circle = new Circle(150, Color.web("white", 0.05));
+        GridPane root3 = new GridPane();
+        GridPane circles = new GridPane();
+        for (int i = 0; i < 1; i++) {
+            Circle circle = new Circle(10, Color.BLACK);
             circle.setStrokeType(StrokeType.OUTSIDE);
             circle.setStroke(Color.web("white", 0.16));
             circle.setStrokeWidth(4);
             circles.getChildren().add(circle);
         }
-      
+
         Group blendModeGroup = new Group(new Group(circles));
-       // colors.setBlendMode(BlendMode.OVERLAY);
-        root.getChildren().add(blendModeGroup);
-        pane.setCenter(root);
-        circles.setEffect(new BoxBlur(10, 10, 3));
-        Timeline timeline = new Timeline();
+        // colors.setBlendMode(BlendMode.OVERLAY);
+        root3.getChildren().add(blendModeGroup);
+        pane.setRight(root3);
+        // dotsbox.getChildren().add(blendModeGroup);
+        // circles.setEffect(new BoxBlur(10, 10, 3));
+        timeline = new Timeline();
         for (Node circle : circles.getChildren()) {
             timeline.getKeyFrames().addAll(
-                    new KeyFrame(Duration.ZERO, // set start position at 0
-                            new KeyValue(circle.translateXProperty(), random() * 800),
-                            new KeyValue(circle.translateYProperty(), random() * 600)),
-                    new KeyFrame(new Duration(40000), // set end position at 40s
-                            new KeyValue(circle.translateXProperty(), random() * 800),
-                            new KeyValue(circle.translateYProperty(), random() * 600)));
+                    new KeyFrame(Duration.ONE, // set start position at 0
+
+                            new KeyValue(circle.translateXProperty(), 0),
+                            new KeyValue(circle.translateYProperty(), 0)),
+                    new KeyFrame(new Duration(1000), // set end position at 40s
+                            new KeyValue(circle.translateXProperty(), random() * 600),
+                            new KeyValue(circle.translateYProperty(), random() * 800))
+            );
         }
         // play 40s of animation
         timeline.play();
 
     }
-    
-    public void stopAnimation(){
-        
+
+    public void stopAnimation() {
+        timeline.stop();
+
     }
 }
