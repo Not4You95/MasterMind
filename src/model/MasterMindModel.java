@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import com.sun.scenario.effect.impl.Renderer;
@@ -34,21 +30,30 @@ public class MasterMindModel {
     private int PlayerNumer = 0;
     private ReadAndWrite file;
     private File filename;
-
+    
+    /**
+     * constructor
+     */
     public MasterMindModel() {
         Colors = new ArrayList<RowCirckle>();
         Players = new Player();
         file = new ReadAndWrite();
         dots = new ArrayList<RowCirckle>();
     }
-
+    
+   /**
+     * adding color to the rows and increment row
+     */
     public void addColors(ArrayList temp) {
         RowCirckle cirkelRow = new RowCirckle(temp.get(0).toString(), temp.get(1).toString(), temp.get(2).toString(), temp.get(3).toString());
         Colors.add(cirkelRow);
         System.out.println("User: " + Colors.get(row).toString());
         row++;
     }
-
+    
+    /**
+     * compares the choosen colors and marks the dots with right color
+     */
     public String[] guessOfColors() {
         String[] dotsString = new String[4];
         int svart = 0;
@@ -100,6 +105,9 @@ public class MasterMindModel {
         return dotsString;
     }
 
+    /**
+     * creats an array with colors (secret code)
+     */
     public void colorGenerated() {
         String[] temp = new String[4];
 
@@ -112,6 +120,9 @@ public class MasterMindModel {
 
     }
 
+     /**
+     * sets the name of the player and increments number of players
+     */
     public void newPlayer(String name) {
 
         Players.setName(name);
@@ -119,16 +130,23 @@ public class MasterMindModel {
         PlayerNumer++;
 
     }
-
+    
+    
+     /**
+     *prints the player name
+     */
     public void getPlayers() {
 
         System.out.println(Players.getUserName());
     }
 
+    /**
+     * saves the secret code, player guess, player name and dots to file
+     */
     public void saveToFile() throws IOException, AlertToUser {
 
         if (Players.getUserName() == null) {
-            throw new AlertToUser("You need to creat a player!");
+            throw new AlertToUser("You need to create a player!");
         }
         Players.lastGame(secretColors, Colors, dots);
         boolean temp2 = file.writeToFile(Players, filename);
@@ -136,6 +154,9 @@ public class MasterMindModel {
 
     }
 
+    /**
+     * @return 
+     */
     public String getNrWins() {
         // return Integer.toString(Players.getNumberOfWins());
         return "" + Players.getNumberOfWins();
