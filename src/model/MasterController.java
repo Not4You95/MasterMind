@@ -80,7 +80,7 @@ public class MasterController {
     }
 
     /**
-     * sets new gane
+     * sets new game
      */
     public void newGame() {
         scen.setGame(Boolean.TRUE);

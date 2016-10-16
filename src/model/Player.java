@@ -40,7 +40,6 @@ public class Player implements Serializable {
      *
      * set player name
      */
-
     public void setName(String name) {
         this.userName = name;
     }
@@ -60,7 +59,7 @@ public class Player implements Serializable {
     }
 
     /**
-     * @param numberOfWins the numberOfWins to set
+     * adds the numberOfWins with 1
      */
     public void addNumberOfWins() {
         numberOfWins++;
@@ -74,14 +73,13 @@ public class Player implements Serializable {
     }
 
     /**
-     * @param numberOfGames the numberOfGames to set
+     * adds the numberOfGames with 1
      */
     public void addNumberOfGames() {
         numberOfGames++;
     }
 
     /**
-     *
      * sets the color, dots and secret code from a previous game
      */
     public void lastGame(RowCircle secret, ArrayList<RowCircle> colors, ArrayList<RowCircle> dots) {
@@ -94,15 +92,14 @@ public class Player implements Serializable {
     }
 
     /**
-     *
-     * @return secret code
+     * @return secret color code
      */
     public RowCircle getSecretClass() {
         return secretColor;
     }
 
     /**
-     * @return
+     * @return the color user have chosen
      */
     public ArrayList<RowCircle> getColors() {
         ArrayList<RowCircle> temp = new ArrayList<RowCircle>();
@@ -111,16 +108,9 @@ public class Player implements Serializable {
     }
 
     /**
+     * Get the dots
      *
-     *
-     */
-    public void setDots(ArrayList<RowCircle> newDots) {
-        this.dots.addAll(newDots);
-    }
-
-    /**
-     *
-     *
+     * @return arrayList of dots
      */
     public ArrayList<RowCircle> getDots() {
         ArrayList<RowCircle> temp = new ArrayList<RowCircle>();
@@ -128,24 +118,18 @@ public class Player implements Serializable {
         return temp;
     }
 
-    /**
-     * @return the lastGameNr
-     */
-    /**
+    /** returns the value if last game was finished or not
      * @return the gameover
      */
     public boolean isGameover() {
         return gameover;
     }
 
-    /**
-     * @param gameover the gameover to set
+    /** Set if the game is over or not 
      */
     public void setGameover(boolean gameover) {
         this.gameover = gameover;
     }
-    /**
-     * @return the game
-     */
+    
 
 }

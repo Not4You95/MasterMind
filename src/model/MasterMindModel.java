@@ -240,7 +240,6 @@ public class MasterMindModel {
     }
     
     /** Remove all data in arrayList colors and dots, and row=0;
-     * 
      */
 
     public void clear() {

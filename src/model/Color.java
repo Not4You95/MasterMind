@@ -3,7 +3,7 @@ package model;
 
 /**
  * constructor
- * @author Robert
+ * @author jonas
  */
 public enum Color {
     red,blue,green,purple;
