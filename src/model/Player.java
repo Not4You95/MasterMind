@@ -24,17 +24,7 @@ public class Player implements Serializable {
     public Player() {
         userColors = new ArrayList<RowCircle>();
         dots = new ArrayList<RowCircle>();
-    }
-
-    /**
-     *
-     * constructor
-     */
-    public Player(String name) {
-        this.userName = name;
-        userColors = new ArrayList<RowCircle>();
-
-    }
+    } 
 
     /**
      *

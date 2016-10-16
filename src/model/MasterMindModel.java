@@ -10,8 +10,7 @@ import java.util.ArrayList;
  */
 public class MasterMindModel {
 
-    private ArrayList<RowCircle> Colors;
-    private ArrayList<RowCircle> dots;
+    private ArrayList<RowCircle> Colors, dots;
     private int row = 0, losNr = 7;
     private RowCircle secretColors;
     private Player players = null;
@@ -197,8 +196,10 @@ public class MasterMindModel {
         return true;
     }
 
-    /** Returns the colors in arrayList colors
-     * @return Arraylist of colors in string 
+    /**
+     * Returns the colors in arrayList colors
+     *
+     * @return Arraylist of colors in string
      */
     public ArrayList<String> getColors() {
         ArrayList<String> temp = new ArrayList<String>();
@@ -212,7 +213,9 @@ public class MasterMindModel {
         return temp;
     }
 
-    /** Returns the dots in arrayList Dots
+    /**
+     * Returns the dots in arrayList Dots
+     *
      * @return Arraylist of color dots in string
      */
     public ArrayList<String> getDots() {
@@ -226,22 +229,25 @@ public class MasterMindModel {
 
         return temp;
     }
-    /** This method returns boolean in the player have lost or win 
-    
+
+    /**
+     * This method returns boolean in the player have lost or win      *
      */
 
     public boolean isGameover() {
         return players.isGameover();
     }
-/** Set the the value of game over
- */
-    public void setGameover(Boolean game) {       
+
+    /**
+     * Set the the value of game over
+     */
+    public void setGameover(Boolean game) {
         players.setGameover(game);
     }
-    
-    /** Remove all data in arrayList colors and dots, and row=0;
-     */
 
+    /**
+     * Remove all data in arrayList colors and dots, and row=0;
+     */
     public void clear() {
         Colors.clear();
         dots.clear();
