@@ -117,12 +117,12 @@ public class MasterController {
     public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {
         if (file != null) {
             scen.stopAnimation();
-            scen.printButtens();          
+            scen.printButtens();
             MasterModel.readFromFile(file);
             scen.setGame(MasterModel.isGameover());
             scen.makeBord();
             updateScore();
-            scen.updateCircle(getColors());            
+            scen.updateCircle(getColors());
             scen.updatedots(getDots());
 
         }
@@ -132,8 +132,12 @@ public class MasterController {
     /**
      * saves to file
      */
-    public void saveToFile() throws IOException, AlertToUser {
-        MasterModel.saveToFile();
+    public void saveToFile() throws IOException, AlertToUser {        
+        if (color.size() != 0) {
+            scen.alertToUserScen("You have to finish the line to save!", "Warning", "Warning");
+        } else {
+            MasterModel.saveToFile();
+        }
 
     }
 
