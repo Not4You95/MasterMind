@@ -1,4 +1,3 @@
-
 package model;
 
 import java.io.Serializable;
@@ -11,47 +10,39 @@ import java.util.ArrayList;
 public class Player implements Serializable {
 
     private String userName = null;
-    private double score = 0.0;
     private int numberOfWins = 0;
     private int numberOfGames = 0;
-    
     private boolean gameover = false;
     private RowCircle secretColor;
     private ArrayList<RowCircle> userColors;
     private ArrayList<RowCircle> dots;
-/**
- *
- * constructor
- */
+
+    /**
+     *
+     * constructor
+     */
     public Player() {
         userColors = new ArrayList<RowCircle>();
-        dots  =new ArrayList<RowCircle>();
+        dots = new ArrayList<RowCircle>();
     }
-    
-/**
- *
- * constructor
- */
+
+    /**
+     *
+     * constructor
+     */
     public Player(String name) {
         this.userName = name;
         userColors = new ArrayList<RowCircle>();
 
     }
-/**
- *
- * set player name
- */
-    
+
+    /**
+     *
+     * set player name
+     */
+
     public void setName(String name) {
         this.userName = name;
-    }
-
-/**
- *
- * @return the score
- */    
-    public double getScore() {
-        return score;
     }
 
     /**
@@ -71,7 +62,7 @@ public class Player implements Serializable {
     /**
      * @param numberOfWins the numberOfWins to set
      */
-    public void setNumberOfWins() {
+    public void addNumberOfWins() {
         numberOfWins++;
     }
 
@@ -85,15 +76,17 @@ public class Player implements Serializable {
     /**
      * @param numberOfGames the numberOfGames to set
      */
-    public void setNumberOfGames() {
+    public void addNumberOfGames() {
         numberOfGames++;
     }
 
-/**
- *
- * sets the color, dots and secret code from a previous game
- */
+    /**
+     *
+     * sets the color, dots and secret code from a previous game
+     */
     public void lastGame(RowCircle secret, ArrayList<RowCircle> colors, ArrayList<RowCircle> dots) {
+        this.userColors.clear();
+        this.dots.clear();
         secretColor = secret;
         this.userColors.addAll(colors);
         this.dots.addAll(dots);
@@ -103,33 +96,33 @@ public class Player implements Serializable {
     /**
      *
      * @return secret code
-    */
+     */
     public RowCircle getSecretClass() {
         return secretColor;
     }
 
     /**
-    * @return
-    */
+     * @return
+     */
     public ArrayList<RowCircle> getColors() {
         ArrayList<RowCircle> temp = new ArrayList<RowCircle>();
         temp.addAll(userColors);
         return temp;
     }
-    
+
     /**
      *
-     * 
+     *
      */
-    public void setDots(ArrayList<RowCircle> newDots){
+    public void setDots(ArrayList<RowCircle> newDots) {
         this.dots.addAll(newDots);
     }
-    
+
     /**
      *
-     * 
+     *
      */
-    public ArrayList<RowCircle> getDots(){
+    public ArrayList<RowCircle> getDots() {
         ArrayList<RowCircle> temp = new ArrayList<RowCircle>();
         temp.addAll(dots);
         return temp;
@@ -138,8 +131,6 @@ public class Player implements Serializable {
     /**
      * @return the lastGameNr
      */
-   
-
     /**
      * @return the gameover
      */
@@ -156,7 +147,5 @@ public class Player implements Serializable {
     /**
      * @return the game
      */
-   
-    
-}
 
+}

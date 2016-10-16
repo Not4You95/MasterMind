@@ -17,7 +17,7 @@ public class AlertToUser extends RuntimeException {
     }
     
     /**
-     *
+     * This method returns the error massage 
      * @return alert message
      */
     @Override

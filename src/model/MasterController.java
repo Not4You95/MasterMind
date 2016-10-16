@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import static javafx.application.Application.launch;
 import mastermind.MasterMind;
 
-
 /**
  *
  * @author jonas
@@ -37,26 +36,24 @@ public class MasterController {
         ArrayList<String> temp = new ArrayList<String>();
         this.color.add(color);
         if (this.color.size() == 4) {
-            System.out.println("controler: "+this.color.toString());
+
             MasterModel.addColors(this.color);
             temp.addAll(MasterModel.guessOfColors());
-            System.out.println("Contoler size: "+temp.size());
+
             this.color.clear();
-            scen.updatedots(temp);       
-        
-            System.out.println("Controler dots: "+temp.toString());
-             if (temp.get(0).equals("winner")) {
-            scen.alertToUserScen("Congratilazen you are a code breaker!", "Winner", "Winner!");
-            updateScore();
-            scen.setGame(MasterModel.gameover());
+            scen.updatedots(temp);
 
-        } else if (temp.get(0).equals("lost")) {
-            scen.alertToUserScen("You lost, what a loser!", "Warning: Loser alert", "Loser");
-            updateScore();
-            scen.setGame(MasterModel.gameover());
+            if (temp.get(0).equals("winner")) {
+                scen.alertToUserScen("Congratilazen you are a code breaker!", "Winner", "Winner!");
+                updateScore();
+                scen.setGame(MasterModel.isGameover());
 
-        
-        }  
+            } else if (temp.get(0).equals("lost")) {
+                scen.alertToUserScen("You lost, what a loser!", "Warning: Loser alert", "Loser");
+                updateScore();
+                scen.setGame(MasterModel.isGameover());
+
+            }
         }
 
     }
@@ -89,10 +86,11 @@ public class MasterController {
         scen.setGame(Boolean.TRUE);
 
         if (MasterModel.hasGamePlayer()) {
+            MasterModel.clear();
             MasterModel.setGameover(Boolean.FALSE);
             scen.stopAnimation();
             scen.printButtens();
-            scen.setGame(MasterModel.gameover());
+            scen.setGame(MasterModel.isGameover());
             scen.makeBord();
             updateScore();
             MasterModel.colorGenerated();
@@ -119,16 +117,14 @@ public class MasterController {
     public void openFile(File file) throws AlertToUser, ClassNotFoundException, IOException {
         if (file != null) {
             scen.stopAnimation();
-            scen.printButtens();
-            System.out.println(file.toString());
+            scen.printButtens();          
             MasterModel.readFromFile(file);
-            scen.setGame(MasterModel.gameover());
+            scen.setGame(MasterModel.isGameover());
             scen.makeBord();
             updateScore();
-            scen.updateCircle(getColors());
-            System.out.println("Dots: " + getDots().toString());
+            scen.updateCircle(getColors());            
             scen.updatedots(getDots());
-            
+
         }
 
     }
@@ -155,7 +151,6 @@ public class MasterController {
      */
     public void newPlayer(String name) {
         MasterModel.newPlayer(name);
-        MasterModel.clear();
 
     }
 

@@ -42,9 +42,8 @@ import model.*;
  */
 public class MasterMind extends Application {
 
-   
     private HBox bottonBox;
-    private GridPane grid, dotsbox,animoBox;
+    private GridPane grid, dotsbox, animoBox;
     private MasterController controller;
     private BorderPane pane;
     private int colum = 0, row = 6, dotcolum = 0, dotrow = 6;
@@ -57,7 +56,6 @@ public class MasterMind extends Application {
     private TextField name = null;
     private Alert alert;
     private ArrayList<PathTransition> ptArray;
-    
 
     @Override
     public void start(Stage primaryStage) {
@@ -75,8 +73,10 @@ public class MasterMind extends Application {
         dotsbox.setAlignment(Pos.CENTER_RIGHT);
 ///////////////////////IMAGE///////////////////////////////////////////////////////////////////
         ImageView image = new ImageView(new Image(getClass().getResourceAsStream("Wood2.jpg")));
-        pane.getChildren().addAll(image);
-   ////////////////////BUTTENS/////////////////////////////////////////////////// 
+        pane.getChildren().add(image);
+
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("icon.jpg")));
+        ////////////////////BUTTENS/////////////////////////////////////////////////// 
         redbutton = new Button(null);
 
         redbutton.setStyle("-fx-background-radius: 5em; "
@@ -129,7 +129,7 @@ public class MasterMind extends Application {
         aboutGame = new MenuItem("About us");
         aboutGame.addEventHandler(ActionEvent.ACTION, new menuChoise());
         rules.addEventHandler(ActionEvent.ACTION, new menuChoise());
-        about.getItems().addAll(rules, aboutGame);
+        about.getItems().addAll(rules);
 //////////////////////////////MEDNY DESIGN//////////////////////////////////////////////////////////        
         menuBar.setStyle("-fx-background-color: #a6b5c9,linear-gradient(#303842 0%, #3e5577 20%, #375074 100%),linear-gradient(#768aa5 0%, #849cbb 5%, #5877a2 50%, #486a9a 51%, #4a6c9b 100%);"
                 + "-fx-background-insets: 0 0 -1 0,0,1;"
@@ -147,7 +147,6 @@ public class MasterMind extends Application {
         bottonBox.setSpacing(20);
 
         ////////////////////////////////////////////   
-       
         pane.setRight(dotsbox);
         pane.setTop(menuBar);
 
@@ -163,7 +162,7 @@ public class MasterMind extends Application {
         primaryStage.setMaxWidth(800);
         primaryStage.setTitle("MasterMind");
         primaryStage.setScene(scene);
-       
+
         primaryStage.show();
 
     }
@@ -196,7 +195,6 @@ public class MasterMind extends Application {
 
         }
 
-        // System.out.println("colum: " + colum + "\n row: " + row);
     }
 
     public void score(String winsNumer, String gamesnumer) {
@@ -233,7 +231,7 @@ public class MasterMind extends Application {
     }
 
     public void makeBord() {
-         pane.setCenter(grid);
+        pane.setCenter(grid);
         for (int i = 0; i < 7; i++) {
 
             for (int j = 0; j < 4; j++) {
@@ -290,7 +288,6 @@ public class MasterMind extends Application {
                 nameStage.close();
 
             } else if (event.getSource() == aboutGame) {
-                animation();
 
             }
 
@@ -378,7 +375,7 @@ public class MasterMind extends Application {
     public void updatedots(ArrayList<String> dots) {
 
         for (int i = 0; i < dots.size(); i++) {
-            System.out.println(dots.get(i));
+
             if (dots.get(i).equals("black")) {
 
                 MakeDots(Color.BLACK);
@@ -390,7 +387,7 @@ public class MasterMind extends Application {
             }
 
         }
-      
+
     }
 
     public void MakeDots(Color c) {
@@ -468,6 +465,7 @@ public class MasterMind extends Application {
         for (int i = 0; i < ptArray.size(); i++) {
             ptArray.get(i).stop();
         }
-        
+
     }
 }
+

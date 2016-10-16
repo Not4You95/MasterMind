@@ -12,7 +12,7 @@ public class RowCircle implements Serializable{
 
    
     private ArrayList<String> color;
-    private int colum = 0;
+   
 
    /**
     *

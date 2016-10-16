@@ -16,17 +16,17 @@ public class ReadAndWrite {
     private File MyFile;
 
     /**
-     *
      * constructor
      */
     public ReadAndWrite() {
         MyFile = new File("test.txt");
     }
 
-    /**
-     *
-     *
-     */
+   /**
+    *  This method saves the data of the type player in to a file   
+    * @param file is the file the data will be saved at
+    * @throws AlertToUser error massage to the user
+    */
     public void writeToFile(Player players, File file) throws IOException, AlertToUser {
         System.out.println("write");
         boolean success = false;
@@ -53,11 +53,9 @@ public class ReadAndWrite {
     }
 
     /**
-     * method reads saved information from text file and creates an arraylist
-     * with books.
-     *
-     * @return true if saved, else false
-     * @throws ClassNotFoundException
+     * method reads saved information from text file and returns the player objekt
+     * @param file is the file the will be open.  
+     * @throws AlertToUser returns error massage to the user
      */
     public Player readFromFile(File file) throws ClassNotFoundException, IOException, AlertToUser {
         Player players = new Player();
